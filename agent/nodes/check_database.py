@@ -41,9 +41,30 @@ def check_database_node(state: dict) -> dict:
             lib_data = database[library]
             methods_db = lib_data.get("methods", {})
             
+            # Try direct match first, then fallback for dotted method keys
+            # e.g., "np.bool" matches directly; "df.append" falls back to "append"
+            matched_key = None
             if method in methods_db:
-                method_data = methods_db[method]
-                
+                matched_key = method
+            elif "." in method:
+                attr_only = method.split(".")[-1]
+                if attr_only in methods_db:
+                    matched_key = attr_only
+                else:
+                    for db_key in methods_db:
+                        if db_key.endswith(f".{attr_only}"):
+                            matched_key = db_key
+                            break
+            else:
+                # If method doesn't have a dot (e.g. "bool" directly), check if any db_key ends with ".bool"
+                for db_key in methods_db:
+                    if db_key.endswith(f".{method}"):
+                        matched_key = db_key
+                        break
+
+            if matched_key is not None:
+                method_data = methods_db[matched_key]
+
                 # Check if the method has issues
                 if not method_data.get("exists", True):
                     # Method was removed or deprecated
@@ -55,7 +76,7 @@ def check_database_node(state: dict) -> dict:
                         "changed_in" in method_data
                     )
                     status = "found_broken" if has_issues else "found_ok"
-                
+
                 result = DatabaseResult(
                     library=library,
                     method=method,
@@ -65,13 +86,13 @@ def check_database_node(state: dict) -> dict:
                 )
             else:
                 # Library is in database but this specific method isn't
-                # Could be fine (not every method needs to be in DB)
+                # Pass the entire library's known issues to the LLM so it can cross-reference
                 result = DatabaseResult(
                     library=library,
                     method=method,
                     line_number=call["line_number"],
                     status="not_in_db",
-                    data=None
+                    data={"all_known_issues_for_this_library": methods_db}
                 )
         else:
             # Library not in our database at all

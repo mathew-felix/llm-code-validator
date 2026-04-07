@@ -1,42 +1,44 @@
 import ast
-from typing import List
 from agent.schemas import AgentState, ExtractedCall
 
 
 def extract_imports_node(state: dict) -> dict:
     """
     NODE 1: Extract every library call from the code.
-    
+
     What it does: Reads the code using Python's AST parser,
-    finds every import statement and method call, and returns
-    a structured list of {library, method, line_number, import_path}
-    
+    finds every import statement AND method/attribute call, and returns
+    a structured list of {library, method, line_number, import_path}.
+
     Why AST: Handles all valid Python syntax including aliases,
     multi-line imports, and nested calls.
     """
     code = state["original_code"]
     extracted_calls = []
-    
+    alias_map = {}  # maps alias/used-name → real top-level library name
+
     try:
         tree = ast.parse(code)
     except SyntaxError as e:
-        # Code has syntax errors — cannot parse
-        # Return empty list and let later nodes handle it
         print(f"Syntax error in code: {e}")
         return {**state, "extracted_calls": []}
-    
-    # Walk through every node in the AST
+
+    # --- Pass 1: Collect imports and build alias map ---
     for node in ast.walk(tree):
-        
+
         # Handle: from langchain.agents import initialize_agent
         if isinstance(node, ast.ImportFrom):
             module = node.module or ""
-            library = module.split(".")[0]  # Get top-level package name
-            
+            library = module.split(".")[0]
+
             for alias in node.names:
                 method_name = alias.name
+                used_name = alias.asname if alias.asname else alias.name
                 import_path = f"from {module} import {method_name}"
-                
+
+                # Track what name is used in code → which library it belongs to
+                alias_map[used_name] = library
+
                 call = ExtractedCall(
                     library=library,
                     method=method_name,
@@ -44,11 +46,16 @@ def extract_imports_node(state: dict) -> dict:
                     import_path=import_path
                 )
                 extracted_calls.append(call)
-        
-        # Handle: import langchain
+
+        # Handle: import numpy as np / import pinecone
         elif isinstance(node, ast.Import):
             for alias in node.names:
                 library = alias.name.split(".")[0]
+                used_name = alias.asname if alias.asname else alias.name
+
+                # Build alias map: np → numpy, pd → pandas, tf → tensorflow
+                alias_map[used_name] = library
+
                 call = ExtractedCall(
                     library=library,
                     method=alias.name,
@@ -56,8 +63,32 @@ def extract_imports_node(state: dict) -> dict:
                     import_path=f"import {alias.name}"
                 )
                 extracted_calls.append(call)
-    
-    # Remove duplicates (same method imported in multiple ways)
+
+    # --- Pass 2: Extract method/attribute calls on imported names ---
+    # Only extract calls where the caller is a known import (avoids noise)
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Attribute):
+            # Handle one-level: np.bool, pinecone.init(), df.append()
+            if isinstance(node.value, ast.Name):
+                caller = node.value.id
+                attr = node.attr
+
+                # Only extract if caller was actually imported
+                if caller in alias_map:
+                    real_library = alias_map[caller]
+                    # Preserve the caller syntax for DB matching
+                    # e.g., "np.bool", "pinecone.init", "tf.Session"
+                    method_key = f"{caller}.{attr}"
+
+                    call = ExtractedCall(
+                        library=real_library,
+                        method=method_key,
+                        line_number=node.lineno,
+                        import_path=f"attribute: {caller}.{attr}"
+                    )
+                    extracted_calls.append(call)
+
+    # Remove duplicates (same library.method pair)
     seen = set()
     unique_calls = []
     for call in extracted_calls:
@@ -65,9 +96,9 @@ def extract_imports_node(state: dict) -> dict:
         if key not in seen:
             seen.add(key)
             unique_calls.append(call)
-    
+
     print(f"Extracted {len(unique_calls)} unique library calls")
-    
+
     # Convert to dict for LangGraph state
     return {
         **state,

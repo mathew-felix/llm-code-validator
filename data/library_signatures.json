@@ -6,9 +6,10 @@
       "initialize_agent": {
         "exists": false,
         "removed_in": "0.2.0",
-        "reason": "Replaced by LangGraph agent constructors",
-        "replacement": "langgraph.prebuilt.create_react_agent",
+        "removed_date": "2024-05-01",
+        "reason": "Replaced by LangGraph agent constructors — LangChain no longer owns agent orchestration",
         "old_import": "from langchain.agents import initialize_agent",
+        "replacement": "langgraph.prebuilt.create_react_agent",
         "replacement_example": "from langgraph.prebuilt import create_react_agent\nagent = create_react_agent(llm, tools)"
       },
       "ConversationBufferMemory": {
@@ -23,9 +24,10 @@
       "LLMChain": {
         "exists": false,
         "removed_in": "0.3.0",
+        "removed_date": "2024-09-15",
         "reason": "Replaced by LCEL (LangChain Expression Language) pipe syntax",
-        "replacement": "chain = prompt | llm | output_parser",
         "old_import": "from langchain.chains import LLMChain",
+        "replacement": "chain = prompt | llm | output_parser",
         "replacement_example": "from langchain_core.prompts import ChatPromptTemplate\nchain = ChatPromptTemplate.from_template('{input}') | llm"
       },
       "OpenAI": {
@@ -56,7 +58,7 @@
         "exists": false,
         "removed_in": "1.0.0",
         "removed_date": "2023-11-06",
-        "reason": "Complete SDK rewrite — class-based API removed",
+        "reason": "Complete SDK rewrite — class-based API replaced by client instance methods",
         "old_import": "import openai\nopenai.ChatCompletion.create(...)",
         "replacement": "from openai import OpenAI\nclient = OpenAI()\nclient.chat.completions.create(...)",
         "replacement_example": "from openai import OpenAI\nclient = OpenAI(api_key='your-key')\nresponse = client.chat.completions.create(\n    model='gpt-4o-mini',\n    messages=[{'role': 'user', 'content': 'Hello'}]\n)"
@@ -64,16 +66,28 @@
       "openai.Completion.create": {
         "exists": false,
         "removed_in": "1.0.0",
-        "reason": "Completions API replaced by chat completions",
+        "removed_date": "2023-11-06",
+        "reason": "Completions API replaced by chat completions — old text-in text-out pattern removed",
         "old_import": "import openai\nopenai.Completion.create(...)",
-        "replacement": "client.chat.completions.create(...)"
+        "replacement": "client.chat.completions.create(...)",
+        "replacement_example": "from openai import OpenAI\nclient = OpenAI()\nresponse = client.chat.completions.create(\n    model='gpt-4o-mini',\n    messages=[{'role': 'user', 'content': prompt}]\n)"
       },
       "openai.api_key": {
         "exists": false,
         "removed_in": "1.0.0",
-        "reason": "Global state removed — pass key to client constructor",
+        "removed_date": "2023-11-06",
+        "reason": "Global state removed — pass key to client constructor instead",
         "old_usage": "openai.api_key = 'sk-...'",
         "replacement": "client = OpenAI(api_key='sk-...')"
+      },
+      "openai.Embedding.create": {
+        "exists": false,
+        "removed_in": "1.0.0",
+        "removed_date": "2023-11-06",
+        "reason": "Class-level API removed — use client instance",
+        "old_usage": "openai.Embedding.create(input='text', model='text-embedding-ada-002')",
+        "replacement": "client.embeddings.create(input='text', model='text-embedding-3-small')",
+        "replacement_example": "from openai import OpenAI\nclient = OpenAI()\nresponse = client.embeddings.create(\n    input='text to embed',\n    model='text-embedding-3-small'\n)"
       }
     }
   },
@@ -84,42 +98,69 @@
       "validator": {
         "exists": false,
         "removed_in": "2.0.0",
-        "reason": "Replaced by field_validator decorator",
+        "removed_date": "2023-06-30",
+        "reason": "Replaced by field_validator decorator with @classmethod requirement",
         "old_import": "from pydantic import validator",
         "replacement": "from pydantic import field_validator",
-        "replacement_example": "@field_validator('field_name')\n@classmethod\ndef validate_field(cls, v):\n    return v"
+        "replacement_example": "from pydantic import field_validator\n\n@field_validator('field_name')\n@classmethod\ndef validate_field(cls, v):\n    return v"
+      },
+      "root_validator": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "removed_date": "2023-06-30",
+        "reason": "Replaced by model_validator decorator",
+        "old_import": "from pydantic import root_validator",
+        "replacement": "from pydantic import model_validator",
+        "replacement_example": "from pydantic import model_validator\n\n@model_validator(mode='after')\ndef validate_model(self):\n    return self"
       },
       "BaseModel.__fields__": {
         "exists": false,
         "removed_in": "2.0.0",
-        "reason": "Replaced by model_fields",
+        "reason": "Replaced by model_fields — returns FieldInfo objects instead of ModelField",
         "old_usage": "MyModel.__fields__",
         "replacement": "MyModel.model_fields"
       },
       "BaseModel.dict": {
         "exists": false,
         "removed_in": "2.0.0",
-        "reason": "Replaced by model_dump()",
+        "reason": "Replaced by model_dump() — method renamed for consistency",
         "old_usage": "my_instance.dict()",
         "replacement": "my_instance.model_dump()"
       },
       "BaseModel.json": {
         "exists": false,
         "removed_in": "2.0.0",
-        "reason": "Replaced by model_dump_json()",
+        "reason": "Replaced by model_dump_json() — method renamed for consistency",
         "old_usage": "my_instance.json()",
         "replacement": "my_instance.model_dump_json()"
+      },
+      "BaseModel.parse_obj": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "reason": "Replaced by model_validate()",
+        "old_usage": "MyModel.parse_obj(data_dict)",
+        "replacement": "MyModel.model_validate(data_dict)"
       }
     }
   },
   "sklearn": {
     "current_version": "1.4.x",
+    "last_updated": "2026-04-07",
     "methods": {
       "StandardScaler.fit_transform": {
         "exists": true,
         "signature": "fit_transform(X, y=None, **fit_params)",
         "common_mistake": "Passing y as a positional argument — y is ignored for StandardScaler",
         "correct_usage": "scaler.fit_transform(X)"
+      },
+      "sklearn.externals.joblib": {
+        "exists": false,
+        "removed_in": "0.23.0",
+        "removed_date": "2020-05-01",
+        "reason": "joblib was removed from sklearn.externals — use joblib directly",
+        "old_import": "from sklearn.externals import joblib",
+        "replacement": "import joblib",
+        "replacement_example": "import joblib\njoblib.dump(model, 'model.pkl')\nmodel = joblib.load('model.pkl')"
       }
     }
   },
@@ -130,23 +171,51 @@
       "append": {
         "exists": false,
         "removed_in": "2.0.0",
-        "reason": "DataFrame.append was deprecated and then removed in 2.0.0. Use pd.concat instead.",
+        "removed_date": "2023-04-03",
+        "reason": "DataFrame.append was deprecated in 1.4.0 and removed in 2.0.0 — use pd.concat instead",
         "old_usage": "df1.append(df2)",
-        "replacement": "pd.concat([df1, df2])"
+        "replacement": "pd.concat([df1, df2])",
+        "replacement_example": "import pandas as pd\nresult = pd.concat([df1, df2], ignore_index=True)"
       },
       "mad": {
         "exists": false,
         "removed_in": "2.0.0",
-        "reason": "mad() was removed in 2.0.0.",
+        "removed_date": "2023-04-03",
+        "reason": "mad() (mean absolute deviation) was removed in 2.0.0",
         "old_usage": "df.mad()",
         "replacement": "(df - df.mean()).abs().mean()"
       },
       "Int64Index": {
         "exists": false,
         "removed_in": "2.0.0",
-        "reason": "NumericIndex types were removed in 2.0.0",
+        "removed_date": "2023-04-03",
+        "reason": "NumericIndex types (Int64Index, Float64Index, UInt64Index) were removed in 2.0.0",
         "old_usage": "pd.Int64Index([1, 2, 3])",
         "replacement": "pd.Index([1, 2, 3], dtype='int64')"
+      },
+      "DataFrame.swaplevel": {
+        "exists": true,
+        "changed_in": "2.0.0",
+        "note": "i and j parameter defaults changed — must now specify explicitly",
+        "old_usage": "df.swaplevel()",
+        "replacement": "df.swaplevel(0, 1)"
+      },
+      "DataFrame.iteritems": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "removed_date": "2023-04-03",
+        "reason": "iteritems() was removed — use items() instead",
+        "old_usage": "for col, series in df.iteritems():",
+        "replacement": "for col, series in df.items():"
+      },
+      "DataFrame.inplace": {
+        "exists": true,
+        "changed_in": "2.0.0",
+        "note": "inplace parameter on many DataFrame methods is deprecated and will be removed in a future version",
+        "reason": "Copy-on-Write (CoW) makes inplace semantically unclear — operations should return new objects",
+        "old_usage": "df.drop(columns=['col'], inplace=True)",
+        "replacement": "df = df.drop(columns=['col'])",
+        "replacement_example": "# Old pattern (deprecated):\ndf.reset_index(inplace=True)\n# New pattern:\ndf = df.reset_index()"
       }
     }
   },
@@ -157,42 +226,497 @@
       "sigmoid": {
         "exists": false,
         "removed_in": "2.0.0",
-        "reason": "Deprecated from torch.nn.functional in favor of torch.sigmoid",
+        "reason": "torch.nn.functional.sigmoid deprecated in favor of torch.sigmoid",
         "old_usage": "F.sigmoid(x)",
-        "replacement": "torch.sigmoid(x)"
+        "replacement": "torch.sigmoid(x)",
+        "replacement_example": "import torch\noutput = torch.sigmoid(input_tensor)"
       },
       "cholesky": {
         "exists": false,
         "removed_in": "2.0.0",
-        "reason": "torch.cholesky is deprecated. Use torch.linalg.cholesky instead.",
+        "reason": "torch.cholesky deprecated — moved to torch.linalg namespace",
         "old_usage": "torch.cholesky(A)",
-        "replacement": "torch.linalg.cholesky(A)"
+        "replacement": "torch.linalg.cholesky(A)",
+        "replacement_example": "import torch\nL = torch.linalg.cholesky(A)"
+      },
+      "torch.cuda.amp.autocast": {
+        "exists": true,
+        "changed_in": "2.4.0",
+        "note": "torch.cuda.amp.autocast is deprecated — use torch.amp.autocast('cuda') instead",
+        "old_usage": "with torch.cuda.amp.autocast():",
+        "replacement": "with torch.amp.autocast('cuda'):"
+      },
+      "torch.nn.utils.clip_grad_value_": {
+        "exists": true,
+        "note": "Still exists but foreach parameter added in 2.0 — old code works but misses perf optimization",
+        "common_mistake": "Using old single-tensor clip instead of batched foreach=True"
       }
     }
   },
   "fastapi": {
-    "current_version": "0.100+",
+    "current_version": "0.115.x",
     "last_updated": "2026-04-07",
     "methods": {
       "on_event": {
         "exists": true,
         "changed_in": "0.93.0",
-        "note": "on_event('startup') is deprecated, use lifespan context managers instead.",
-        "old_usage": "@app.on_event('startup')",
-        "replacement": "@asynccontextmanager\nasync def lifespan(app: FastAPI):\n    yield\napp = FastAPI(lifespan=lifespan)"
+        "note": "on_event('startup') and on_event('shutdown') are deprecated — use lifespan context managers",
+        "old_usage": "@app.on_event('startup')\nasync def startup(): ...",
+        "replacement": "@asynccontextmanager\nasync def lifespan(app: FastAPI):\n    # startup\n    yield\n    # shutdown\napp = FastAPI(lifespan=lifespan)",
+        "replacement_example": "from contextlib import asynccontextmanager\nfrom fastapi import FastAPI\n\n@asynccontextmanager\nasync def lifespan(app: FastAPI):\n    print('Starting up')\n    yield\n    print('Shutting down')\n\napp = FastAPI(lifespan=lifespan)"
+      },
+      "Depends": {
+        "exists": true,
+        "note": "use_cache parameter default changed — be explicit about caching behavior",
+        "common_mistake": "Assuming dependencies are recomputed per-request without use_cache=False"
       }
     }
   },
   "transformers": {
-    "current_version": "4.x",
+    "current_version": "4.40.x",
     "last_updated": "2026-04-07",
     "methods": {
       "per_gpu_train_batch_size": {
         "exists": false,
         "removed_in": "4.30.0",
-        "reason": "Deprecated in favor of per_device_train_batch_size",
+        "reason": "Deprecated in favor of per_device_train_batch_size — per-GPU sizing replaced by per-device",
         "old_usage": "TrainingArguments(per_gpu_train_batch_size=8)",
         "replacement": "TrainingArguments(per_device_train_batch_size=8)"
+      },
+      "AutoModelForCausalLM.from_pretrained": {
+        "exists": true,
+        "changed_in": "4.36.0",
+        "note": "device_map parameter behavior changed — 'auto' now requires accelerate installed",
+        "common_mistake": "Using device_map='auto' without pip install accelerate",
+        "old_usage": "model = AutoModelForCausalLM.from_pretrained('model', device_map='auto')",
+        "replacement": "pip install accelerate first, then model = AutoModelForCausalLM.from_pretrained('model', device_map='auto')"
+      },
+      "pipeline": {
+        "exists": true,
+        "changed_in": "4.36.0",
+        "note": "pipeline task parameter must match model architecture — LLMs commonly generate wrong task strings",
+        "common_mistake": "Using pipeline('text-generation', model='bert-base-uncased') — BERT is not a text generation model",
+        "correct_usage": "pipeline('fill-mask', model='bert-base-uncased') or pipeline('text-generation', model='gpt2')"
+      },
+      "AutoTokenizer": {
+        "exists": true,
+        "note": "AutoTokenizer returns a 'fast' (Rust-backed) tokenizer by default since 4.0. Some models only have slow tokenizers.",
+        "common_mistake": "Using AutoTokenizer.from_pretrained('model') and assuming it returns a slow tokenizer — fast tokenizers have different method signatures for offset mapping and encoding internals",
+        "old_usage": "tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')\n# Assumes slow tokenizer behavior",
+        "replacement": "tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased', use_fast=False)  # if you need slow tokenizer\n# or handle both: tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')  # fast by default"
+      }
+    }
+  },
+  "llama_index": {
+    "current_version": "0.10.x",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "GPTSimpleVectorIndex": {
+        "exists": false,
+        "removed_in": "0.10.0",
+        "removed_date": "2024-02-15",
+        "reason": "Complete package restructure — all index classes moved and renamed",
+        "old_import": "from llama_index import GPTSimpleVectorIndex",
+        "replacement": "from llama_index.core import VectorStoreIndex",
+        "replacement_example": "from llama_index.core import VectorStoreIndex, SimpleDirectoryReader\ndocs = SimpleDirectoryReader('data').load_data()\nindex = VectorStoreIndex.from_documents(docs)"
+      },
+      "ServiceContext": {
+        "exists": false,
+        "removed_in": "0.10.0",
+        "removed_date": "2024-02-15",
+        "reason": "Replaced by Settings global configuration object",
+        "old_import": "from llama_index import ServiceContext",
+        "replacement": "from llama_index.core import Settings",
+        "replacement_example": "from llama_index.core import Settings\nfrom llama_index.llms.openai import OpenAI\nSettings.llm = OpenAI(model='gpt-4o-mini')"
+      },
+      "LLMPredictor": {
+        "exists": false,
+        "removed_in": "0.10.0",
+        "removed_date": "2024-02-15",
+        "reason": "Removed entirely — use Settings.llm directly",
+        "old_import": "from llama_index import LLMPredictor",
+        "replacement": "from llama_index.core import Settings"
+      },
+      "SimpleDirectoryReader": {
+        "exists": true,
+        "module_current": "llama_index.core",
+        "module_old": "llama_index",
+        "changed_in": "0.10.0",
+        "old_import": "from llama_index import SimpleDirectoryReader",
+        "new_import": "from llama_index.core import SimpleDirectoryReader"
+      }
+    }
+  },
+  "crewai": {
+    "current_version": "0.80.x",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "Task.output": {
+        "exists": false,
+        "removed_in": "0.28.0",
+        "reason": "Task output handling restructured — use TaskOutput object from crew.kickoff()",
+        "old_usage": "task.output",
+        "replacement": "Access via crew.kickoff().raw or crew.kickoff().pydantic",
+        "replacement_example": "result = crew.kickoff()\nprint(result.raw)"
+      },
+      "Process.sequential": {
+        "exists": true,
+        "note": "Import unchanged but process behavior changed in 0.30.0 — tasks no longer auto-share context",
+        "old_import": "from crewai import Process",
+        "new_import": "from crewai import Process",
+        "common_mistake": "Old code assumes agents can see each others outputs without explicit context passing"
+      },
+      "Agent": {
+        "exists": true,
+        "changed_in": "0.51.0",
+        "note": "allow_delegation default changed from True to False in 0.51.0",
+        "common_mistake": "Old code assumes agents can delegate by default — must now pass allow_delegation=True explicitly",
+        "old_behavior": "Agent(role='...', goal='...', backstory='...')  # delegation was True",
+        "new_behavior": "Agent(role='...', goal='...', backstory='...', allow_delegation=True)"
+      }
+    }
+  },
+  "numpy": {
+    "current_version": "2.0.x",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "np.bool": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "removed_date": "2024-06-16",
+        "reason": "Alias for Python built-in bool was removed — deprecated since 1.20",
+        "old_usage": "np.bool",
+        "replacement": "bool or np.bool_",
+        "replacement_example": "arr = np.array([True, False], dtype=bool)"
+      },
+      "np.int": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "removed_date": "2024-06-16",
+        "reason": "Alias for Python built-in int was removed — deprecated since 1.20",
+        "old_usage": "np.int",
+        "replacement": "int or np.int_"
+      },
+      "np.float": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "removed_date": "2024-06-16",
+        "reason": "Alias for Python built-in float was removed — deprecated since 1.20",
+        "old_usage": "np.float",
+        "replacement": "float or np.float64"
+      },
+      "np.complex": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "removed_date": "2024-06-16",
+        "reason": "Alias for Python built-in complex was removed",
+        "old_usage": "np.complex",
+        "replacement": "complex or np.complex128"
+      },
+      "np.object": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "removed_date": "2024-06-16",
+        "reason": "Alias for Python built-in object was removed",
+        "old_usage": "np.object",
+        "replacement": "object or np.object_"
+      },
+      "np.str": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "removed_date": "2024-06-16",
+        "reason": "Alias for Python built-in str was removed",
+        "old_usage": "np.str",
+        "replacement": "str or np.str_"
+      },
+      "np.string_": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "removed_date": "2024-06-16",
+        "reason": "np.string_ was renamed to np.bytes_ — the old name was confusing because it referred to byte strings, not unicode strings",
+        "old_usage": "np.string_",
+        "replacement": "np.bytes_"
+      }
+    }
+  },
+  "sqlalchemy": {
+    "current_version": "2.0.x",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "Session.execute": {
+        "exists": true,
+        "changed_in": "2.0.0",
+        "note": "Signature changed — no longer accepts legacy Query objects, requires select() constructs",
+        "old_usage": "session.execute(MyModel.__table__.select())",
+        "new_usage": "session.execute(select(MyModel))",
+        "replacement_example": "from sqlalchemy import select\nresult = session.execute(select(MyModel).where(MyModel.id == 1))"
+      },
+      "Query": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "removed_date": "2023-01-26",
+        "reason": "Legacy Query API removed — replaced by select() construct for all queries",
+        "old_usage": "session.query(MyModel).filter(MyModel.id == 1).first()",
+        "replacement": "session.execute(select(MyModel).where(MyModel.id == 1)).scalar_one_or_none()",
+        "replacement_example": "from sqlalchemy import select\nstmt = select(MyModel).where(MyModel.id == 1)\nresult = session.execute(stmt).scalar_one_or_none()"
+      },
+      "Engine.execute": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "removed_date": "2023-01-26",
+        "reason": "Removed connectionless execution — use connection context manager",
+        "old_usage": "engine.execute('SELECT * FROM table')",
+        "replacement": "with engine.connect() as conn:\n    result = conn.execute(text('SELECT * FROM table'))",
+        "replacement_example": "from sqlalchemy import text\nwith engine.connect() as conn:\n    result = conn.execute(text('SELECT * FROM users'))\n    rows = result.fetchall()"
+      },
+      "declarative_base": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "removed_date": "2023-01-26",
+        "reason": "declarative_base() function replaced by DeclarativeBase class",
+        "old_import": "from sqlalchemy.ext.declarative import declarative_base\nBase = declarative_base()",
+        "replacement": "from sqlalchemy.orm import DeclarativeBase\nclass Base(DeclarativeBase): pass"
+      }
+    }
+  },
+  "anthropic": {
+    "current_version": "0.40.x",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "anthropic.Anthropic.completions.create": {
+        "exists": false,
+        "removed_in": "0.20.0",
+        "reason": "Completions API removed entirely — use messages.create for all Claude interactions",
+        "old_usage": "client.completions.create(model='claude-2', prompt=prompt, max_tokens=1000)",
+        "replacement": "client.messages.create(model='claude-3-5-sonnet-20241022', max_tokens=1000, messages=[{'role': 'user', 'content': prompt}])",
+        "replacement_example": "from anthropic import Anthropic\nclient = Anthropic()\nmessage = client.messages.create(\n    model='claude-3-5-sonnet-20241022',\n    max_tokens=1024,\n    messages=[{'role': 'user', 'content': 'Hello'}]\n)"
+      },
+      "HUMAN_PROMPT": {
+        "exists": false,
+        "removed_in": "0.20.0",
+        "reason": "Special prompt tokens (HUMAN_PROMPT, AI_PROMPT) removed with completions API — messages format handles role separation",
+        "old_usage": "f'{HUMAN_PROMPT} Hello {AI_PROMPT}'",
+        "replacement": "Use messages list format: [{'role': 'user', 'content': 'Hello'}]"
+      },
+      "anthropic.Client": {
+        "exists": false,
+        "removed_in": "0.20.0",
+        "reason": "Old Client class replaced by Anthropic class",
+        "old_import": "from anthropic import Client",
+        "replacement": "from anthropic import Anthropic",
+        "replacement_example": "from anthropic import Anthropic\nclient = Anthropic(api_key='...')"
+      }
+    }
+  },
+  "langgraph": {
+    "current_version": "0.2.x",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "MessageGraph": {
+        "exists": false,
+        "removed_in": "0.2.0",
+        "reason": "Replaced by StateGraph with MessagesState — message-only graphs use the same StateGraph",
+        "old_import": "from langgraph.graph import MessageGraph",
+        "replacement": "from langgraph.graph import StateGraph\nfrom langgraph.graph.message import MessagesState",
+        "replacement_example": "from langgraph.graph import StateGraph\nfrom langgraph.graph.message import MessagesState\ngraph = StateGraph(MessagesState)"
+      },
+      "StateGraph.compile": {
+        "exists": true,
+        "changed_in": "0.2.0",
+        "note": "Syntax unchanged but MemorySaver import path changed from langgraph.checkpoint to langgraph.checkpoint.memory",
+        "old_import": "from langgraph.checkpoint import MemorySaver",
+        "new_import": "from langgraph.checkpoint.memory import MemorySaver"
+      },
+      "END": {
+        "exists": true,
+        "module_current": "langgraph.graph",
+        "note": "Still exists but must be imported explicitly — not a global constant",
+        "common_mistake": "Using END without importing it from langgraph.graph",
+        "correct_import": "from langgraph.graph import StateGraph, END"
+      }
+    }
+  },
+  "pinecone": {
+    "current_version": "3.x",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "pinecone.init": {
+        "exists": false,
+        "removed_in": "3.0.0",
+        "removed_date": "2024-01-15",
+        "reason": "Global init pattern removed — use Pinecone client class with explicit credentials",
+        "old_usage": "import pinecone\npinecone.init(api_key='...', environment='...')",
+        "replacement": "from pinecone import Pinecone\npc = Pinecone(api_key='...')",
+        "replacement_example": "from pinecone import Pinecone\npc = Pinecone(api_key='your-key')\nindex = pc.Index('my-index')"
+      },
+      "pinecone.create_index": {
+        "exists": false,
+        "removed_in": "3.0.0",
+        "removed_date": "2024-01-15",
+        "reason": "Module-level functions removed — use client instance methods with ServerlessSpec",
+        "old_usage": "pinecone.create_index('index-name', dimension=1536)",
+        "replacement": "pc.create_index(name='index-name', dimension=1536, spec=ServerlessSpec(cloud='aws', region='us-east-1'))",
+        "replacement_example": "from pinecone import Pinecone, ServerlessSpec\npc = Pinecone(api_key='...')\npc.create_index(\n    name='my-index',\n    dimension=1536,\n    spec=ServerlessSpec(cloud='aws', region='us-east-1')\n)"
+      },
+      "pinecone.Index": {
+        "exists": false,
+        "removed_in": "3.0.0",
+        "removed_date": "2024-01-15",
+        "reason": "Module-level class access removed — must go through client instance",
+        "old_usage": "index = pinecone.Index('index-name')",
+        "replacement": "index = pc.Index('index-name')"
+      }
+    }
+  },
+  "chromadb": {
+    "current_version": "0.4.x",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "Client": {
+        "exists": false,
+        "removed_in": "0.4.0",
+        "reason": "Generic Client removed — must use specific EphemeralClient (in-memory) or PersistentClient (disk) or HttpClient (server)",
+        "old_import": "import chromadb\nclient = chromadb.Client()",
+        "replacement": "import chromadb\nclient = chromadb.PersistentClient(path='./chroma_db')",
+        "replacement_example": "import chromadb\n# For persistent storage:\nclient = chromadb.PersistentClient(path='./chroma_db')\n# For in-memory testing:\nclient = chromadb.EphemeralClient()\n# For remote server:\nclient = chromadb.HttpClient(host='localhost', port=8000)"
+      },
+      "Settings": {
+        "exists": true,
+        "changed_in": "0.4.0",
+        "note": "Settings class restructured — chroma_db_impl and anonymized_telemetry parameters removed or changed",
+        "old_usage": "chromadb.Client(Settings(chroma_db_impl='duckdb+parquet', persist_directory='./db'))",
+        "replacement": "chromadb.PersistentClient(path='./db')"
+      },
+      "Collection.add": {
+        "exists": true,
+        "changed_in": "0.4.0",
+        "note": "embeddings parameter renamed in some contexts — ensure using current parameter names",
+        "common_mistake": "Passing positional arguments instead of keyword arguments"
+      }
+    }
+  },
+  "keras": {
+    "current_version": "3.x",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "tensorflow.keras": {
+        "exists": false,
+        "removed_in": "3.0.0",
+        "removed_date": "2024-03-11",
+        "reason": "Keras 3.0 is backend-agnostic — standalone package, no longer coupled to TensorFlow",
+        "old_import": "from tensorflow.keras.models import Sequential",
+        "replacement": "from keras.models import Sequential",
+        "replacement_example": "import keras\nfrom keras import layers\nmodel = keras.Sequential([\n    layers.Dense(64, activation='relu'),\n    layers.Dense(10, activation='softmax')\n])"
+      },
+      "keras.optimizers.Adam": {
+        "exists": true,
+        "changed_in": "3.0.0",
+        "note": "Optimizer import path simplified — use keras.optimizers directly",
+        "old_import": "from tensorflow.keras.optimizers import Adam",
+        "new_import": "from keras.optimizers import Adam"
+      },
+      "model.fit_generator": {
+        "exists": false,
+        "removed_in": "3.0.0",
+        "reason": "fit_generator removed — use model.fit which now accepts generators natively",
+        "old_usage": "model.fit_generator(generator, steps_per_epoch=100)",
+        "replacement": "model.fit(generator, steps_per_epoch=100)"
+      }
+    }
+  },
+  "motor": {
+    "current_version": "3.x",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "MotorClient": {
+        "exists": true,
+        "reason": "Motor wraps PyMongo for async usage — every database operation returns a coroutine that must be awaited",
+        "note": "Requires asyncio event loop — every database operation returns a coroutine",
+        "common_mistake": "Mixing synchronous PyMongo calls inside async structures causes event loop blocking or timeout bugs",
+        "old_import": "from motor.motor_asyncio import AsyncIOMotorClient",
+        "replacement_example": "from motor.motor_asyncio import AsyncIOMotorClient\nclient = AsyncIOMotorClient('mongodb://localhost:27017')\ndb = client.mydb\n# ALL operations must be awaited:\ndoc = await db.collection.find_one({'key': 'value'})"
+      },
+      "motor.motor_asyncio.AsyncIOMotorClient": {
+        "exists": true,
+        "reason": "The canonical async MongoDB client — import path is stable across Motor 3.x",
+        "note": "Import path is stable but ALL operations must be awaited",
+        "common_mistake": "Forgetting to await find(), insert_one(), etc. — returns coroutine object instead of result",
+        "old_usage": "doc = db.collection.find_one({'key': 'value'})  # BUG: missing await",
+        "replacement": "doc = await db.collection.find_one({'key': 'value'})",
+        "replacement_example": "import asyncio\nfrom motor.motor_asyncio import AsyncIOMotorClient\n\nasync def main():\n    client = AsyncIOMotorClient('mongodb://localhost:27017')\n    db = client.test_db\n    await db.collection.insert_one({'name': 'test'})\n    doc = await db.collection.find_one({'name': 'test'})\n    print(doc)\n\nasyncio.run(main())"
+      },
+      "pymongo.MongoClient": {
+        "exists": true,
+        "reason": "PyMongo is the synchronous MongoDB driver — commonly confused with Motor in async contexts",
+        "note": "PyMongo is synchronous — do NOT use inside async frameworks like FastAPI/aiohttp",
+        "common_mistake": "Using pymongo.MongoClient inside FastAPI endpoints blocks the event loop — causes timeouts under concurrent load",
+        "old_usage": "from pymongo import MongoClient\nclient = MongoClient('mongodb://localhost:27017')\n# Inside a FastAPI async endpoint — BLOCKS",
+        "replacement": "from motor.motor_asyncio import AsyncIOMotorClient\nclient = AsyncIOMotorClient('mongodb://localhost:27017')",
+        "replacement_example": "# WRONG — blocks event loop in FastAPI:\nfrom pymongo import MongoClient\nclient = MongoClient()\n\n# CORRECT — async-safe:\nfrom motor.motor_asyncio import AsyncIOMotorClient\nclient = AsyncIOMotorClient()"
+      }
+    }
+  },
+  "tensorflow": {
+    "current_version": "2.16.x",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "tf.Session": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "removed_date": "2019-09-30",
+        "reason": "TF2 uses eager execution by default — Sessions are no longer needed",
+        "old_usage": "sess = tf.Session()\nsess.run(result)",
+        "replacement": "# Just call the operation directly — eager execution\nresult = my_operation(inputs)"
+      },
+      "tf.placeholder": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "removed_date": "2019-09-30",
+        "reason": "Placeholders removed — use tf.function with input signatures or Keras Input layers",
+        "old_usage": "x = tf.placeholder(tf.float32, shape=[None, 784])",
+        "replacement": "Use keras.Input(shape=(784,)) or tf.function arguments"
+      },
+      "tf.contrib": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "removed_date": "2019-09-30",
+        "reason": "Entire tf.contrib namespace removed — functions moved to core TF, TF Addons, or removed entirely",
+        "old_import": "from tensorflow.contrib import layers",
+        "replacement": "from tensorflow.keras import layers"
+      },
+      "tf.compat.v1": {
+        "exists": true,
+        "note": "Compatibility module still exists but signals TF1 code — should be migrated to TF2 native",
+        "common_mistake": "Using tf.compat.v1.disable_eager_execution() as a permanent fix instead of migrating"
+      }
+    }
+  },
+  "scipy": {
+    "current_version": "1.14.x",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "scipy.misc.imread": {
+        "exists": false,
+        "removed_in": "1.3.0",
+        "removed_date": "2019-05-17",
+        "reason": "Image IO functions removed from scipy — use imageio or PIL instead",
+        "old_import": "from scipy.misc import imread",
+        "replacement": "from imageio import imread",
+        "replacement_example": "import imageio.v3 as iio\nimage = iio.imread('image.png')"
+      },
+      "scipy.misc.imsave": {
+        "exists": false,
+        "removed_in": "1.3.0",
+        "reason": "Image IO functions removed — use imageio or PIL",
+        "old_import": "from scipy.misc import imsave",
+        "replacement": "from imageio import imwrite"
+      },
+      "scipy.misc.imresize": {
+        "exists": false,
+        "removed_in": "1.3.0",
+        "reason": "Image resize removed — use PIL or skimage",
+        "old_import": "from scipy.misc import imresize",
+        "replacement": "from PIL import Image; img.resize((w, h))"
       }
     }
   }

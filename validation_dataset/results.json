@@ -1,42 +1,607 @@
 {
   "summary": {
-    "total_tests": 5,
-    "precision": 0.2857142857142857,
-    "recall": 0.2857142857142857,
-    "true_positives": 2,
-    "false_positives": 5,
-    "false_negatives": 5
+    "total_tests": 50,
+    "total_known_issues": 82,
+    "precision": 0.7159,
+    "recall": 0.7683,
+    "true_positives": 63,
+    "false_positives": 25,
+    "false_negatives": 19,
+    "total_time_seconds": 357.5,
+    "avg_time_per_test": 7.15
+  },
+  "per_library": {
+    "anthropic": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 1
+    },
+    "chromadb": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+    },
+    "crewai": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 5
+    },
+    "fastapi": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1
+    },
+    "keras": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3
+    },
+    "langchain": {
+      "tp": 10,
+      "fp": 0,
+      "fn": 2
+    },
+    "langgraph": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0
+    },
+    "llama_index": {
+      "tp": 8,
+      "fp": 0,
+      "fn": 1
+    },
+    "numpy": {
+      "tp": 6,
+      "fp": 0,
+      "fn": 0
+    },
+    "openai": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 1
+    },
+    "pandas": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 2
+    },
+    "pinecone": {
+      "tp": 8,
+      "fp": 0,
+      "fn": 0
+    },
+    "pydantic": {
+      "tp": 6,
+      "fp": 0,
+      "fn": 0
+    },
+    "sklearn": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "sqlalchemy": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 1
+    },
+    "tensorflow": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0
+    },
+    "torch": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+    },
+    "transformers": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 2
+    }
   },
   "per_test": [
     {
       "id": "test_001",
+      "description": "LangChain initialize_agent and old OpenAI import",
       "expected": 2,
       "found": 2,
-      "true_positives": 2
+      "true_positives": 2,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 8.47
     },
     {
       "id": "test_002",
+      "description": "LangChain LLMChain removed in 0.3",
       "expected": 1,
-      "found": 2,
-      "true_positives": 0
+      "found": 1,
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 4.74
     },
     {
       "id": "test_003",
-      "expected": 1,
-      "found": 1,
-      "true_positives": 0
+      "description": "LangChain ChatOpenAI old import path",
+      "expected": 2,
+      "found": 2,
+      "true_positives": 2,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 5.82
     },
     {
       "id": "test_004",
-      "expected": 1,
-      "found": 1,
-      "true_positives": 0
+      "description": "LangChain full agent with all old patterns",
+      "expected": 4,
+      "found": 4,
+      "true_positives": 4,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 12.51
     },
     {
       "id": "test_005",
+      "description": "LangChain agent with tools \u2014 old pattern",
+      "expected": 2,
+      "found": 2,
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 1,
+      "time_seconds": 6.59
+    },
+    {
+      "id": "test_006",
+      "description": "OpenAI SDK v0 ChatCompletion pattern",
+      "expected": 1,
+      "found": 2,
+      "true_positives": 1,
+      "false_positives": 1,
+      "false_negatives": 0,
+      "time_seconds": 10.74
+    },
+    {
+      "id": "test_007",
+      "description": "OpenAI old Completion API (non-chat)",
+      "expected": 1,
+      "found": 2,
+      "true_positives": 1,
+      "false_positives": 1,
+      "false_negatives": 0,
+      "time_seconds": 11.53
+    },
+    {
+      "id": "test_008",
+      "description": "OpenAI old Embedding API",
+      "expected": 1,
+      "found": 2,
+      "true_positives": 1,
+      "false_positives": 1,
+      "false_negatives": 0,
+      "time_seconds": 8.43
+    },
+    {
+      "id": "test_009",
+      "description": "OpenAI multiple old patterns combined",
+      "expected": 2,
+      "found": 3,
+      "true_positives": 1,
+      "false_positives": 2,
+      "false_negatives": 1,
+      "time_seconds": 11.34
+    },
+    {
+      "id": "test_010",
+      "description": "Pydantic v1 validator decorator",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 6.08
+    },
+    {
+      "id": "test_011",
+      "description": "Pydantic v1 root_validator",
+      "expected": 1,
+      "found": 2,
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 7.81
+    },
+    {
+      "id": "test_012",
+      "description": "Pydantic v1 .dict() and .json() methods",
+      "expected": 2,
+      "found": 2,
+      "true_positives": 2,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 8.16
+    },
+    {
+      "id": "test_013",
+      "description": "Pydantic v1 parse_obj and __fields__",
+      "expected": 2,
+      "found": 2,
+      "true_positives": 2,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 7.47
+    },
+    {
+      "id": "test_014",
+      "description": "Pandas DataFrame.append removed in 2.0",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 0,
+      "false_positives": 1,
+      "false_negatives": 1,
+      "time_seconds": 6.89
+    },
+    {
+      "id": "test_015",
+      "description": "Pandas Int64Index removed in 2.0",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 6.19
+    },
+    {
+      "id": "test_016",
+      "description": "Pandas iteritems removed in 2.0",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 0,
+      "false_positives": 1,
+      "false_negatives": 1,
+      "time_seconds": 4.21
+    },
+    {
+      "id": "test_017",
+      "description": "Pandas multiple deprecated patterns",
+      "expected": 2,
+      "found": 3,
+      "true_positives": 2,
+      "false_positives": 1,
+      "false_negatives": 0,
+      "time_seconds": 10.83
+    },
+    {
+      "id": "test_018",
+      "description": "PyTorch torch.cholesky deprecated",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 3.47
+    },
+    {
+      "id": "test_019",
+      "description": "PyTorch F.sigmoid deprecated",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 3.7
+    },
+    {
+      "id": "test_020",
+      "description": "PyTorch old autocast pattern",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 4.38
+    },
+    {
+      "id": "test_021",
+      "description": "LlamaIndex GPTSimpleVectorIndex removed in 0.10",
+      "expected": 2,
+      "found": 3,
+      "true_positives": 2,
+      "false_positives": 1,
+      "false_negatives": 0,
+      "time_seconds": 9.58
+    },
+    {
+      "id": "test_022",
+      "description": "LlamaIndex ServiceContext and LLMPredictor removed",
+      "expected": 3,
+      "found": 3,
+      "true_positives": 2,
+      "false_positives": 0,
+      "false_negatives": 1,
+      "time_seconds": 8.71
+    },
+    {
+      "id": "test_023",
+      "description": "LlamaIndex old imports combined",
+      "expected": 4,
+      "found": 5,
+      "true_positives": 3,
+      "false_positives": 2,
+      "false_negatives": 1,
+      "time_seconds": 12.53
+    },
+    {
+      "id": "test_024",
+      "description": "LlamaIndex old import for SimpleDirectoryReader only",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 3.61
+    },
+    {
+      "id": "test_025",
+      "description": "CrewAI old Task.output access",
+      "expected": 1,
+      "found": 2,
+      "true_positives": 0,
+      "false_positives": 2,
+      "false_negatives": 1,
+      "time_seconds": 6.62
+    },
+    {
+      "id": "test_026",
+      "description": "CrewAI old delegation default",
+      "expected": 2,
+      "found": 2,
+      "true_positives": 0,
+      "false_positives": 2,
+      "false_negatives": 2,
+      "time_seconds": 8.38
+    },
+    {
+      "id": "test_027",
+      "description": "CrewAI combined old patterns",
+      "expected": 2,
+      "found": 2,
+      "true_positives": 0,
+      "false_positives": 2,
+      "false_negatives": 2,
+      "time_seconds": 8.19
+    },
+    {
+      "id": "test_028",
+      "description": "NumPy 2.0 np.bool and np.int removed",
+      "expected": 2,
+      "found": 2,
+      "true_positives": 2,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 9.12
+    },
+    {
+      "id": "test_029",
+      "description": "NumPy 2.0 np.float and np.complex removed",
+      "expected": 3,
+      "found": 3,
+      "true_positives": 3,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 7.86
+    },
+    {
+      "id": "test_030",
+      "description": "NumPy 2.0 np.str alias removed",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 4.19
+    },
+    {
+      "id": "test_031",
+      "description": "SQLAlchemy 2.0 legacy Query API",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 0,
+      "false_positives": 1,
+      "false_negatives": 1,
+      "time_seconds": 7.15
+    },
+    {
+      "id": "test_032",
+      "description": "SQLAlchemy 2.0 Engine.execute removed",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 5.74
+    },
+    {
+      "id": "test_033",
+      "description": "SQLAlchemy old declarative_base",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 5.23
+    },
+    {
+      "id": "test_034",
+      "description": "Anthropic old completions API",
+      "expected": 2,
+      "found": 3,
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 1,
+      "time_seconds": 9.16
+    },
+    {
+      "id": "test_035",
+      "description": "Anthropic old Client class",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 3.84
+    },
+    {
+      "id": "test_036",
+      "description": "Anthropic combined old patterns",
+      "expected": 2,
+      "found": 3,
+      "true_positives": 2,
+      "false_positives": 1,
+      "false_negatives": 0,
+      "time_seconds": 9.14
+    },
+    {
+      "id": "test_037",
+      "description": "LangGraph old MessageGraph pattern",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 4.63
+    },
+    {
+      "id": "test_038",
+      "description": "LangGraph old MemorySaver import",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 4.26
+    },
+    {
+      "id": "test_039",
+      "description": "Pinecone v2 init pattern",
+      "expected": 2,
+      "found": 2,
+      "true_positives": 2,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 8.59
+    },
+    {
+      "id": "test_040",
+      "description": "Pinecone v2 create_index",
+      "expected": 3,
+      "found": 3,
+      "true_positives": 3,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 10.06
+    },
+    {
+      "id": "test_041",
+      "description": "Pinecone v2 full pipeline",
+      "expected": 3,
+      "found": 3,
+      "true_positives": 3,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 10.32
+    },
+    {
+      "id": "test_042",
+      "description": "ChromaDB old Client pattern",
+      "expected": 1,
+      "found": 2,
+      "true_positives": 1,
+      "false_positives": 1,
+      "false_negatives": 0,
+      "time_seconds": 6.29
+    },
+    {
+      "id": "test_043",
+      "description": "ChromaDB old Settings-based client",
+      "expected": 2,
+      "found": 2,
+      "true_positives": 2,
+      "false_positives": 1,
+      "false_negatives": 0,
+      "time_seconds": 6.71
+    },
+    {
+      "id": "test_044",
+      "description": "Keras tensorflow.keras import pattern",
+      "expected": 1,
+      "found": 0,
+      "true_positives": 0,
+      "false_positives": 0,
+      "false_negatives": 1,
+      "time_seconds": 2.36
+    },
+    {
+      "id": "test_045",
+      "description": "Keras fit_generator removed",
       "expected": 2,
       "found": 1,
-      "true_positives": 0
+      "true_positives": 0,
+      "false_positives": 1,
+      "false_negatives": 2,
+      "time_seconds": 4.06
+    },
+    {
+      "id": "test_046",
+      "description": "Transformers per_gpu_train_batch_size removed",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 0,
+      "false_positives": 1,
+      "false_negatives": 1,
+      "time_seconds": 4.97
+    },
+    {
+      "id": "test_047",
+      "description": "Transformers pipeline with wrong model-task match",
+      "expected": 2,
+      "found": 2,
+      "true_positives": 1,
+      "false_positives": 1,
+      "false_negatives": 1,
+      "time_seconds": 7.75
+    },
+    {
+      "id": "test_048",
+      "description": "sklearn externals joblib removed",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 4.68
+    },
+    {
+      "id": "test_049",
+      "description": "FastAPI on_event deprecation",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 0,
+      "false_positives": 1,
+      "false_negatives": 1,
+      "time_seconds": 5.64
+    },
+    {
+      "id": "test_050",
+      "description": "TensorFlow 1.x Session and placeholder pattern",
+      "expected": 2,
+      "found": 2,
+      "true_positives": 2,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 8.78
     }
   ]
 }
