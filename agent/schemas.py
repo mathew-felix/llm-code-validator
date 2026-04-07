@@ -42,6 +42,7 @@ class ValidationReport(BaseModel):
     libraries_unknown: List[str]    # Libraries not in our database (honest)
     total_issues_found: int
     overall_confidence: float
+    filtered_count: int = 0         # How many low-confidence false positives were suppressed
     summary: str                    # One paragraph plain English summary
 
 
@@ -57,4 +58,8 @@ class AgentState(BaseModel):
     libraries_unknown: List[str] = []
     needs_pypi_fetch: bool = False
     confidence: float = 0.0
+    specialists_needed: List[str] = []
+    supervisor_reasoning: str = ""
+    import_specialist_findings: List[ValidationIssue] = []
+    method_specialist_findings: List[ValidationIssue] = []
     report: Optional[ValidationReport] = None

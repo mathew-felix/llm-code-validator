@@ -29,12 +29,15 @@ def extract_imports_node(state: dict) -> dict:
         # Handle: from langchain.agents import initialize_agent
         if isinstance(node, ast.ImportFrom):
             module = node.module or ""
-            library = module.split(".")[0]
+            relative_prefix = "." * node.level
+            library_root = module.split(".")[0] if module else ""
+            library = f"{relative_prefix}{library_root}" if relative_prefix else library_root
 
             for alias in node.names:
                 method_name = alias.name
                 used_name = alias.asname if alias.asname else alias.name
-                import_path = f"from {module} import {method_name}"
+                import_module = f"{relative_prefix}{module}" if module else relative_prefix
+                import_path = f"from {import_module} import {method_name}"
 
                 # Track what name is used in code → which library it belongs to
                 alias_map[used_name] = library

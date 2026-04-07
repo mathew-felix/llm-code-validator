@@ -1,0 +1,257 @@
+Extracted 54 unique library calls
+Database check: 0 issues found, 20 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: Found argparse v1.4.0
+PyPI: json NOT FOUND — possible hallucination
+PyPI: Found logging v0.4.9.6
+PyPI: os NOT FOUND — possible hallucination
+PyPI: platform NOT FOUND — possible hallucination
+PyPI: subprocess NOT FOUND — possible hallucination
+PyPI: sys NOT FOUND — possible hallucination
+PyPI: Found time v1.0.0
+PyPI: Found uuid v1.30
+PyPI: zipfile NOT FOUND — possible hallucination
+PyPI: Found pathlib v1.0.1
+PyPI: Found typing v3.10.0.0
+PyPI: yaml NOT FOUND — possible hallucination
+PyPI: Found onnxruntime v1.24.4
+PyPI: Found importlib v1.0.4
+PyPI: compression NOT FOUND — possible hallucination
+PyPI: frame_removal NOT FOUND — possible hallucination
+PyPI: Found pipeline v0.1
+PyPI: roi_detection NOT FOUND — possible hallucination
+Extracted 89 unique library calls
+Database check: 1 issues found, 19 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: Found argparse v1.4.0
+PyPI: faulthandler NOT FOUND — possible hallucination
+PyPI: gc NOT FOUND — possible hallucination
+PyPI: json NOT FOUND — possible hallucination
+PyPI: os NOT FOUND — possible hallucination
+PyPI: shutil NOT FOUND — possible hallucination
+PyPI: subprocess NOT FOUND — possible hallucination
+PyPI: sys NOT FOUND — possible hallucination
+PyPI: tempfile NOT FOUND — possible hallucination
+PyPI: Found time v1.0.0
+PyPI: warnings NOT FOUND — possible hallucination
+PyPI: bisect NOT FOUND — possible hallucination
+PyPI: Found pathlib v1.0.1
+PyPI: Found typing v3.10.0.0
+PyPI: cv2 NOT FOUND — possible hallucination
+PyPI: decompression NOT FOUND — possible hallucination
+PyPI: roi_masking NOT FOUND — possible hallucination
+PyPI: Found src v0.0.7
+LLM diagnosis failed: Request timed out.
+Extracted 6 unique library calls
+Database check: 0 issues found, 3 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: Found pathlib v1.0.1
+PyPI: Found matplotlib v3.10.8
+LLM diagnosis failed: Request timed out.
+Extracted 40 unique library calls
+Database check: 0 issues found, 15 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: Found argparse v1.4.0
+PyPI: copy NOT FOUND — possible hallucination
+PyPI: Found hashlib v20081119
+PyPI: json NOT FOUND — possible hallucination
+PyPI: subprocess NOT FOUND — possible hallucination
+PyPI: sys NOT FOUND — possible hallucination
+PyPI: Found time v1.0.0
+PyPI: Found datetime v6.0
+PyPI: Found pathlib v1.0.1
+PyPI: Found typing v3.10.0.0
+PyPI: cv2 NOT FOUND — possible hallucination
+PyPI: _phase0_utils NOT FOUND — possible hallucination
+PyPI: run_decompression NOT FOUND — possible hallucination
+PyPI: decompression NOT FOUND — possible hallucination
+Extracted 32 unique library calls
+Database check: 0 issues found, 11 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: Found argparse v1.4.0
+PyPI: copy NOT FOUND — possible hallucination
+PyPI: json NOT FOUND — possible hallucination
+PyPI: subprocess NOT FOUND — possible hallucination
+PyPI: sys NOT FOUND — possible hallucination
+PyPI: Found time v1.0.0
+PyPI: Found datetime v6.0
+PyPI: Found pathlib v1.0.1
+PyPI: Found typing v3.10.0.0
+PyPI: _phase0_utils NOT FOUND — possible hallucination
+Extracted 11 unique library calls
+Database check: 0 issues found, 4 unknown libraries
+PyPI: Found hashlib v20081119
+PyPI: os NOT FOUND — possible hallucination
+PyPI: sys NOT FOUND — possible hallucination
+PyPI: urllib NOT FOUND — possible hallucination
+Extracted 2 unique library calls
+Database check: 0 issues found, 2 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: _download_models_common NOT FOUND — possible hallucination
+[FOUND] scripts/download_compression_models.py: 2 issue(s)
+Extracted 22 unique library calls
+Database check: 0 issues found, 11 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: Found argparse v1.4.0
+PyPI: Found hashlib v20081119
+PyPI: json NOT FOUND — possible hallucination
+PyPI: os NOT FOUND — possible hallucination
+PyPI: subprocess NOT FOUND — possible hallucination
+PyPI: tempfile NOT FOUND — possible hallucination
+PyPI: Found dataclasses v0.8
+PyPI: Found pathlib v1.0.1
+PyPI: Found typing v3.10.0.0
+PyPI: urllib NOT FOUND — possible hallucination
+Extracted 30 unique library calls
+Database check: 0 issues found, 9 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: Found argparse v1.4.0
+PyPI: sys NOT FOUND — possible hallucination
+PyPI: Found time v1.0.0
+PyPI: Found pathlib v1.0.1
+PyPI: Found typing v3.10.0.0
+PyPI: cv2 NOT FOUND — possible hallucination
+PyPI: _phase0_utils NOT FOUND — possible hallucination
+PyPI: roi_detection NOT FOUND — possible hallucination
+Extracted 34 unique library calls
+Database check: 0 issues found, 10 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: Found argparse v1.4.0
+PyPI: sys NOT FOUND — possible hallucination
+PyPI: Found time v1.0.0
+PyPI: Found pathlib v1.0.1
+PyPI: Found typing v3.10.0.0
+PyPI: cv2 NOT FOUND — possible hallucination
+PyPI: _phase0_utils NOT FOUND — possible hallucination
+PyPI: frame_removal NOT FOUND — possible hallucination
+PyPI: roi_detection NOT FOUND — possible hallucination
+Extracted 2 unique library calls
+Database check: 0 issues found, 2 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: _download_models_common NOT FOUND — possible hallucination
+[FOUND] scripts/download_decompression_models.py: 2 issue(s)
+Extracted 16 unique library calls
+Database check: 0 issues found, 7 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: Found hashlib v20081119
+PyPI: json NOT FOUND — possible hallucination
+PyPI: Found pathlib v1.0.1
+PyPI: Found typing v3.10.0.0
+PyPI: yaml NOT FOUND — possible hallucination
+PyPI: zipfile NOT FOUND — possible hallucination
+Extracted 18 unique library calls
+Database check: 0 issues found, 3 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: Found typing v3.10.0.0
+PyPI: cv2 NOT FOUND — possible hallucination
+LLM diagnosis failed: Request timed out.
+Extracted 7 unique library calls
+Database check: 0 issues found, 3 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: Found pathlib v1.0.1
+PyPI: Found typing v3.10.0.0
+LLM diagnosis failed: Request timed out.
+Extracted 2 unique library calls
+Database check: 0 issues found, 2 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: config_schema NOT FOUND — possible hallucination
+[FOUND] src/pipeline/__init__.py: 2 issue(s)
+Extracted 29 unique library calls
+Database check: 1 issues found, 7 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: sys NOT FOUND — possible hallucination
+PyPI: threading NOT FOUND — possible hallucination
+PyPI: Found pathlib v1.0.1
+PyPI: Found typing v3.10.0.0
+PyPI: cv2 NOT FOUND — possible hallucination
+PyPI: Found utils v1.0.2
+LLM diagnosis failed: Request timed out.
+Extracted 4 unique library calls
+Database check: 0 issues found, 2 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: roi_bg_decompress NOT FOUND — possible hallucination
+[FOUND] src/decompression/__init__.py: 4 issue(s)
+Extracted 31 unique library calls
+Database check: 0 issues found, 11 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: json NOT FOUND — possible hallucination
+PyPI: Found logging v0.4.9.6
+PyPI: zipfile NOT FOUND — possible hallucination
+PyPI: Found pathlib v1.0.1
+PyPI: Found typing v3.10.0.0
+PyPI: cv2 NOT FOUND — possible hallucination
+PyPI: yaml NOT FOUND — possible hallucination
+PyPI: interpolation_amt NOT FOUND — possible hallucination
+PyPI: roi_masking NOT FOUND — possible hallucination
+PyPI: Found src v0.0.7
+Extracted 43 unique library calls
+Database check: 0 issues found, 8 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: Found io v0.0.1
+PyPI: sys NOT FOUND — possible hallucination
+PyPI: Found pathlib v1.0.1
+PyPI: Found typing v3.10.0.0
+PyPI: cv2 NOT FOUND — possible hallucination
+PyPI: Found src v0.0.7
+PyPI: Found importlib v1.0.4
+Extracted 43 unique library calls
+Database check: 0 issues found, 8 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: Found io v0.0.1
+PyPI: sys NOT FOUND — possible hallucination
+PyPI: Found dataclasses v0.8
+PyPI: Found pathlib v1.0.1
+PyPI: Found typing v3.10.0.0
+PyPI: cv2 NOT FOUND — possible hallucination
+PyPI: Found src v0.0.7
+Extracted 2 unique library calls
+Database check: 0 issues found, 2 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: phase4_dcvc NOT FOUND — possible hallucination
+[FOUND] src/compression/__init__.py: 2 issue(s)
+Extracted 27 unique library calls
+Database check: 0 issues found, 8 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: tempfile NOT FOUND — possible hallucination
+PyPI: Found pathlib v1.0.1
+PyPI: Found typing v3.10.0.0
+PyPI: cv2 NOT FOUND — possible hallucination
+PyPI: dcvc_encoder NOT FOUND — possible hallucination
+PyPI: roi_masking NOT FOUND — possible hallucination
+PyPI: Found src v0.0.7
+Extracted 23 unique library calls
+Database check: 0 issues found, 4 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: Found dataclasses v0.8
+PyPI: Found typing v3.10.0.0
+PyPI: cv2 NOT FOUND — possible hallucination
+Extracted 7 unique library calls
+Database check: 0 issues found, 3 unknown libraries
+PyPI: dual_timeline NOT FOUND — possible hallucination
+PyPI: keep_streams NOT FOUND — possible hallucination
+PyPI: remove_frames NOT FOUND — possible hallucination
+[FOUND] src/frame_removal/__init__.py: 7 issue(s)
+Extracted 5 unique library calls
+Database check: 0 issues found, 2 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: Found typing v3.10.0.0
+Extracted 17 unique library calls
+Database check: 0 issues found, 4 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: Found pathlib v1.0.1
+PyPI: Found typing v3.10.0.0
+PyPI: cv2 NOT FOUND — possible hallucination
+Extracted 34 unique library calls
+Database check: 0 issues found, 5 unknown libraries
+PyPI: __future__ NOT FOUND — possible hallucination
+PyPI: Found dataclasses v0.8
+PyPI: Found typing v3.10.0.0
+PyPI: cv2 NOT FOUND — possible hallucination
+PyPI: Found ultralytics v8.4.35
+Extracted 1 unique library calls
+Database check: 0 issues found, 1 unknown libraries
+PyPI: roi_detector NOT FOUND — possible hallucination
+[FOUND] src/roi_detection/__init__.py: 1 issue(s)
+
+Total files with issues: 7
+Results saved to: /Users/felix/Projects/llm-code-validator/thesis_validation/results.json

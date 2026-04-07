@@ -1,0 +1,16 @@
+[
+  {
+    "file": "src/decompression/interpolation_amt.py",
+    "issues_found": 1,
+    "issues": [
+      {
+        "line_number": 143,
+        "original_code": "                with torch.autocast(device_type=\"cuda\", dtype=torch.float16):",
+        "issue_type": "deprecated",
+        "explanation": "torch.autocast is no longer valid in 2.4.0. torch.cuda.amp.autocast is deprecated \u2014 use torch.amp.autocast('cuda') instead",
+        "corrected_code": "                with torch.amp.autocast('cuda'):",
+        "confidence": 0.9
+      }
+    ]
+  }
+]

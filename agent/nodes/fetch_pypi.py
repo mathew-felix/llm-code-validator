@@ -1,5 +1,28 @@
 import httpx
 from agent.schemas import AgentState
+from agent.utils import is_likely_local_module
+
+# Maps Python import names to their PyPI distribution names
+# when they do not match directly.
+IMPORT_TO_DISTRIBUTION = {
+    "yaml": "PyYAML",
+    "cv2": "opencv-python",
+    "PIL": "Pillow",
+    "sklearn": "scikit-learn",
+    "skimage": "scikit-image",
+    "bs4": "beautifulsoup4",
+    "wx": "wxPython",
+    "serial": "pyserial",
+    "Crypto": "pycryptodome",
+    "dotenv": "python-dotenv",
+    "attr": "attrs",
+    "dateutil": "python-dateutil",
+    "jwt": "PyJWT",
+    "magic": "python-magic",
+    "pkg_resources": "setuptools",
+    "gi": "PyGObject",
+    "usb": "pyusb",
+}
 
 
 def fetch_pypi_node(state: dict) -> dict:
@@ -21,9 +44,13 @@ def fetch_pypi_node(state: dict) -> dict:
     libraries_unknown = state.get("libraries_unknown", [])
     
     for library in libraries_unknown:
+        if is_likely_local_module(library):
+            continue
+
         try:
             # PyPI JSON API — completely free, no auth required
-            url = f"https://pypi.org/pypi/{library}/json"
+            pypi_name = IMPORT_TO_DISTRIBUTION.get(library, library)
+            url = f"https://pypi.org/pypi/{pypi_name}/json"
             
             with httpx.Client(timeout=10.0) as client:
                 response = client.get(url)
@@ -38,9 +65,10 @@ def fetch_pypi_node(state: dict) -> dict:
                     "summary": info["summary"],
                     "requires_python": info.get("requires_python", "unknown"),
                     "home_page": info.get("home_page", ""),
+                    "distribution_name": pypi_name,
                     "note": "Library found on PyPI but not in local signature database. LLM reasoning quality may be lower."
                 }
-                print(f"PyPI: Found {library} v{info['version']}")
+                print(f"PyPI: Found {library} as {pypi_name} v{info['version']}")
             
             elif response.status_code == 404:
                 # Package doesn't exist on PyPI at all

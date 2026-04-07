@@ -1,6 +1,7 @@
 import json
 import os
 from agent.schemas import AgentState, DatabaseResult
+from agent.utils import is_likely_local_module
 
 
 def check_database_node(state: dict) -> dict:
@@ -32,7 +33,8 @@ def check_database_node(state: dict) -> dict:
     for call in extracted_calls:
         library = call["library"]
         method = call["method"]
-        
+        import_path = call.get("import_path", "")
+
         if library in database:
             # Library is in our database
             if library not in libraries_checked:
@@ -87,15 +89,28 @@ def check_database_node(state: dict) -> dict:
             else:
                 # Library is in database but this specific method isn't
                 # Pass the entire library's known issues to the LLM so it can cross-reference
+                filtered_methods_db = {}
+                for m_name, m_data in methods_db.items():
+                    method_appears_in_code = (
+                        m_name in state["original_code"] or
+                        (m_data.get("module_old") and m_data["module_old"] in state["original_code"]) or 
+                        (m_data.get("old_import") and m_data["old_import"] in state["original_code"])
+                    )
+                    if method_appears_in_code:
+                        filtered_methods_db[m_name] = m_data
+
                 result = DatabaseResult(
                     library=library,
                     method=method,
                     line_number=call["line_number"],
                     status="not_in_db",
-                    data={"all_known_issues_for_this_library": methods_db}
+                    data={"all_known_issues_for_this_library": filtered_methods_db}
                 )
         else:
             # Library not in our database at all
+            if is_likely_local_module(library, import_path):
+                continue
+
             if library not in libraries_unknown:
                 libraries_unknown.append(library)
             needs_pypi_fetch = True

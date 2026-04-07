@@ -2,13 +2,13 @@
   "summary": {
     "total_tests": 50,
     "total_known_issues": 82,
-    "precision": 0.7159,
-    "recall": 0.7683,
-    "true_positives": 63,
-    "false_positives": 25,
-    "false_negatives": 19,
-    "total_time_seconds": 357.5,
-    "avg_time_per_test": 7.15
+    "precision": 0.7662,
+    "recall": 0.7195,
+    "true_positives": 59,
+    "false_positives": 18,
+    "false_negatives": 23,
+    "total_time_seconds": 351.35,
+    "avg_time_per_test": 7.03
   },
   "per_library": {
     "anthropic": {
@@ -27,9 +27,9 @@
       "fn": 5
     },
     "fastapi": {
-      "tp": 0,
+      "tp": 1,
       "fp": 0,
-      "fn": 1
+      "fn": 0
     },
     "keras": {
       "tp": 0,
@@ -47,9 +47,9 @@
       "fn": 0
     },
     "llama_index": {
-      "tp": 8,
+      "tp": 9,
       "fp": 0,
-      "fn": 1
+      "fn": 0
     },
     "numpy": {
       "tp": 6,
@@ -62,9 +62,9 @@
       "fn": 1
     },
     "pandas": {
-      "tp": 3,
+      "tp": 2,
       "fp": 0,
-      "fn": 2
+      "fn": 3
     },
     "pinecone": {
       "tp": 8,
@@ -72,9 +72,9 @@
       "fn": 0
     },
     "pydantic": {
-      "tp": 6,
+      "tp": 2,
       "fp": 0,
-      "fn": 0
+      "fn": 4
     },
     "sklearn": {
       "tp": 1,
@@ -82,9 +82,9 @@
       "fn": 0
     },
     "sqlalchemy": {
-      "tp": 2,
+      "tp": 1,
       "fp": 0,
-      "fn": 1
+      "fn": 2
     },
     "tensorflow": {
       "tp": 2,
@@ -111,7 +111,7 @@
       "true_positives": 2,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 8.47
+      "time_seconds": 9.76
     },
     {
       "id": "test_002",
@@ -121,7 +121,7 @@
       "true_positives": 1,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 4.74
+      "time_seconds": 4.77
     },
     {
       "id": "test_003",
@@ -131,27 +131,27 @@
       "true_positives": 2,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 5.82
+      "time_seconds": 9.54
     },
     {
       "id": "test_004",
       "description": "LangChain full agent with all old patterns",
       "expected": 4,
-      "found": 4,
-      "true_positives": 4,
-      "false_positives": 0,
-      "false_negatives": 0,
-      "time_seconds": 12.51
+      "found": 6,
+      "true_positives": 2,
+      "false_positives": 1,
+      "false_negatives": 2,
+      "time_seconds": 16.44
     },
     {
       "id": "test_005",
       "description": "LangChain agent with tools \u2014 old pattern",
       "expected": 2,
-      "found": 2,
-      "true_positives": 1,
+      "found": 3,
+      "true_positives": 2,
       "false_positives": 0,
-      "false_negatives": 1,
-      "time_seconds": 6.59
+      "false_negatives": 0,
+      "time_seconds": 9.3
     },
     {
       "id": "test_006",
@@ -161,7 +161,7 @@
       "true_positives": 1,
       "false_positives": 1,
       "false_negatives": 0,
-      "time_seconds": 10.74
+      "time_seconds": 9.29
     },
     {
       "id": "test_007",
@@ -171,7 +171,7 @@
       "true_positives": 1,
       "false_positives": 1,
       "false_negatives": 0,
-      "time_seconds": 11.53
+      "time_seconds": 6.74
     },
     {
       "id": "test_008",
@@ -181,7 +181,7 @@
       "true_positives": 1,
       "false_positives": 1,
       "false_negatives": 0,
-      "time_seconds": 8.43
+      "time_seconds": 7.1
     },
     {
       "id": "test_009",
@@ -191,17 +191,17 @@
       "true_positives": 1,
       "false_positives": 2,
       "false_negatives": 1,
-      "time_seconds": 11.34
+      "time_seconds": 8.94
     },
     {
       "id": "test_010",
       "description": "Pydantic v1 validator decorator",
       "expected": 1,
-      "found": 1,
+      "found": 2,
       "true_positives": 1,
-      "false_positives": 0,
+      "false_positives": 1,
       "false_negatives": 0,
-      "time_seconds": 6.08
+      "time_seconds": 7.55
     },
     {
       "id": "test_011",
@@ -211,27 +211,27 @@
       "true_positives": 1,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 7.81
+      "time_seconds": 5.77
     },
     {
       "id": "test_012",
       "description": "Pydantic v1 .dict() and .json() methods",
       "expected": 2,
-      "found": 2,
-      "true_positives": 2,
+      "found": 0,
+      "true_positives": 0,
       "false_positives": 0,
-      "false_negatives": 0,
-      "time_seconds": 8.16
+      "false_negatives": 2,
+      "time_seconds": 2.69
     },
     {
       "id": "test_013",
       "description": "Pydantic v1 parse_obj and __fields__",
       "expected": 2,
-      "found": 2,
-      "true_positives": 2,
+      "found": 0,
+      "true_positives": 0,
       "false_positives": 0,
-      "false_negatives": 0,
-      "time_seconds": 7.47
+      "false_negatives": 2,
+      "time_seconds": 3.07
     },
     {
       "id": "test_014",
@@ -241,7 +241,7 @@
       "true_positives": 0,
       "false_positives": 1,
       "false_negatives": 1,
-      "time_seconds": 6.89
+      "time_seconds": 5.26
     },
     {
       "id": "test_015",
@@ -251,27 +251,27 @@
       "true_positives": 1,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 6.19
+      "time_seconds": 5.07
     },
     {
       "id": "test_016",
       "description": "Pandas iteritems removed in 2.0",
       "expected": 1,
-      "found": 1,
+      "found": 0,
       "true_positives": 0,
-      "false_positives": 1,
+      "false_positives": 0,
       "false_negatives": 1,
-      "time_seconds": 4.21
+      "time_seconds": 3.17
     },
     {
       "id": "test_017",
       "description": "Pandas multiple deprecated patterns",
       "expected": 2,
-      "found": 3,
-      "true_positives": 2,
+      "found": 2,
+      "true_positives": 1,
       "false_positives": 1,
-      "false_negatives": 0,
-      "time_seconds": 10.83
+      "false_negatives": 1,
+      "time_seconds": 6.96
     },
     {
       "id": "test_018",
@@ -281,7 +281,7 @@
       "true_positives": 1,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 3.47
+      "time_seconds": 3.96
     },
     {
       "id": "test_019",
@@ -291,7 +291,7 @@
       "true_positives": 1,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 3.7
+      "time_seconds": 4.09
     },
     {
       "id": "test_020",
@@ -301,7 +301,7 @@
       "true_positives": 1,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 4.38
+      "time_seconds": 4.08
     },
     {
       "id": "test_021",
@@ -311,27 +311,27 @@
       "true_positives": 2,
       "false_positives": 1,
       "false_negatives": 0,
-      "time_seconds": 9.58
+      "time_seconds": 8.66
     },
     {
       "id": "test_022",
       "description": "LlamaIndex ServiceContext and LLMPredictor removed",
       "expected": 3,
-      "found": 3,
-      "true_positives": 2,
+      "found": 4,
+      "true_positives": 3,
       "false_positives": 0,
-      "false_negatives": 1,
-      "time_seconds": 8.71
+      "false_negatives": 0,
+      "time_seconds": 13.63
     },
     {
       "id": "test_023",
       "description": "LlamaIndex old imports combined",
       "expected": 4,
-      "found": 5,
-      "true_positives": 3,
+      "found": 6,
+      "true_positives": 4,
       "false_positives": 2,
-      "false_negatives": 1,
-      "time_seconds": 12.53
+      "false_negatives": 0,
+      "time_seconds": 14.86
     },
     {
       "id": "test_024",
@@ -341,37 +341,37 @@
       "true_positives": 1,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 3.61
+      "time_seconds": 5.96
     },
     {
       "id": "test_025",
       "description": "CrewAI old Task.output access",
       "expected": 1,
-      "found": 2,
+      "found": 1,
       "true_positives": 0,
-      "false_positives": 2,
+      "false_positives": 1,
       "false_negatives": 1,
-      "time_seconds": 6.62
+      "time_seconds": 5.76
     },
     {
       "id": "test_026",
       "description": "CrewAI old delegation default",
       "expected": 2,
-      "found": 2,
+      "found": 1,
       "true_positives": 0,
-      "false_positives": 2,
+      "false_positives": 1,
       "false_negatives": 2,
-      "time_seconds": 8.38
+      "time_seconds": 7.85
     },
     {
       "id": "test_027",
       "description": "CrewAI combined old patterns",
       "expected": 2,
-      "found": 2,
+      "found": 1,
       "true_positives": 0,
-      "false_positives": 2,
+      "false_positives": 1,
       "false_negatives": 2,
-      "time_seconds": 8.19
+      "time_seconds": 6.12
     },
     {
       "id": "test_028",
@@ -381,7 +381,7 @@
       "true_positives": 2,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 9.12
+      "time_seconds": 7.9
     },
     {
       "id": "test_029",
@@ -391,7 +391,7 @@
       "true_positives": 3,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 7.86
+      "time_seconds": 8.24
     },
     {
       "id": "test_030",
@@ -401,27 +401,27 @@
       "true_positives": 1,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 4.19
+      "time_seconds": 5.76
     },
     {
       "id": "test_031",
       "description": "SQLAlchemy 2.0 legacy Query API",
       "expected": 1,
-      "found": 1,
+      "found": 0,
       "true_positives": 0,
-      "false_positives": 1,
+      "false_positives": 0,
       "false_negatives": 1,
-      "time_seconds": 7.15
+      "time_seconds": 3.04
     },
     {
       "id": "test_032",
       "description": "SQLAlchemy 2.0 Engine.execute removed",
       "expected": 1,
-      "found": 1,
-      "true_positives": 1,
+      "found": 0,
+      "true_positives": 0,
       "false_positives": 0,
-      "false_negatives": 0,
-      "time_seconds": 5.74
+      "false_negatives": 1,
+      "time_seconds": 3.0
     },
     {
       "id": "test_033",
@@ -431,17 +431,17 @@
       "true_positives": 1,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 5.23
+      "time_seconds": 6.02
     },
     {
       "id": "test_034",
       "description": "Anthropic old completions API",
       "expected": 2,
-      "found": 3,
+      "found": 1,
       "true_positives": 1,
       "false_positives": 0,
       "false_negatives": 1,
-      "time_seconds": 9.16
+      "time_seconds": 6.79
     },
     {
       "id": "test_035",
@@ -451,17 +451,17 @@
       "true_positives": 1,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 3.84
+      "time_seconds": 7.01
     },
     {
       "id": "test_036",
       "description": "Anthropic combined old patterns",
       "expected": 2,
-      "found": 3,
+      "found": 2,
       "true_positives": 2,
-      "false_positives": 1,
+      "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 9.14
+      "time_seconds": 9.26
     },
     {
       "id": "test_037",
@@ -471,7 +471,7 @@
       "true_positives": 1,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 4.63
+      "time_seconds": 6.17
     },
     {
       "id": "test_038",
@@ -481,7 +481,7 @@
       "true_positives": 1,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 4.26
+      "time_seconds": 5.72
     },
     {
       "id": "test_039",
@@ -491,7 +491,7 @@
       "true_positives": 2,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 8.59
+      "time_seconds": 7.16
     },
     {
       "id": "test_040",
@@ -501,7 +501,7 @@
       "true_positives": 3,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 10.06
+      "time_seconds": 8.75
     },
     {
       "id": "test_041",
@@ -511,17 +511,17 @@
       "true_positives": 3,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 10.32
+      "time_seconds": 11.46
     },
     {
       "id": "test_042",
       "description": "ChromaDB old Client pattern",
       "expected": 1,
-      "found": 2,
+      "found": 1,
       "true_positives": 1,
-      "false_positives": 1,
+      "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 6.29
+      "time_seconds": 7.35
     },
     {
       "id": "test_043",
@@ -531,7 +531,7 @@
       "true_positives": 2,
       "false_positives": 1,
       "false_negatives": 0,
-      "time_seconds": 6.71
+      "time_seconds": 6.77
     },
     {
       "id": "test_044",
@@ -541,37 +541,37 @@
       "true_positives": 0,
       "false_positives": 0,
       "false_negatives": 1,
-      "time_seconds": 2.36
+      "time_seconds": 3.37
     },
     {
       "id": "test_045",
       "description": "Keras fit_generator removed",
       "expected": 2,
-      "found": 1,
+      "found": 0,
       "true_positives": 0,
-      "false_positives": 1,
+      "false_positives": 0,
       "false_negatives": 2,
-      "time_seconds": 4.06
+      "time_seconds": 3.21
     },
     {
       "id": "test_046",
       "description": "Transformers per_gpu_train_batch_size removed",
       "expected": 1,
       "found": 1,
-      "true_positives": 0,
-      "false_positives": 1,
-      "false_negatives": 1,
-      "time_seconds": 4.97
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "time_seconds": 7.81
     },
     {
       "id": "test_047",
       "description": "Transformers pipeline with wrong model-task match",
       "expected": 2,
       "found": 2,
-      "true_positives": 1,
+      "true_positives": 0,
       "false_positives": 1,
-      "false_negatives": 1,
-      "time_seconds": 7.75
+      "false_negatives": 2,
+      "time_seconds": 9.12
     },
     {
       "id": "test_048",
@@ -581,17 +581,17 @@
       "true_positives": 1,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 4.68
+      "time_seconds": 5.58
     },
     {
       "id": "test_049",
       "description": "FastAPI on_event deprecation",
       "expected": 1,
-      "found": 1,
-      "true_positives": 0,
+      "found": 2,
+      "true_positives": 1,
       "false_positives": 1,
-      "false_negatives": 1,
-      "time_seconds": 5.64
+      "false_negatives": 0,
+      "time_seconds": 7.11
     },
     {
       "id": "test_050",
@@ -601,7 +601,7 @@
       "true_positives": 2,
       "false_positives": 0,
       "false_negatives": 0,
-      "time_seconds": 8.78
+      "time_seconds": 8.35
     }
   ]
 }
