@@ -1,3 +1,3 @@
 [submodule "neural-edge-video-compression"]
 	path = neural-edge-video-compression
-	url = https://github.com/mathew-felix/neural-edge-video-compression.git
+	url = git@github.com:mathew-felix/neural-edge-video-compression.git

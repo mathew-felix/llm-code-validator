@@ -59,7 +59,8 @@ I also ran the validator against the project-owned Python files in
 [`neural-edge-video-compression`](neural-edge-video-compression) using
 [`thesis_validation/run_on_thesis.py`](thesis_validation/run_on_thesis.py).
 The thesis repo is tracked as a Git submodule so the same real-world test corpus
-can be checked out in a fresh clone.
+can be checked out in a fresh clone. Because that thesis repo is private, the
+submodule fetch requires GitHub access to `mathew-felix/neural-edge-video-compression`.
 That scan skips vendored directories, test suites, and files above the current
 10,000-character validator limit so the run matches the product's supported input size.
 
