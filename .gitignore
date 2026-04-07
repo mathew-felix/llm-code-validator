@@ -4,3 +4,14 @@
 .env
 __pycache__/
 venv/
+.agents/
+ai_hallucination_validator_plan.md
+evaluation_results*.txt
+gap1.md
+gap2.md
+gaps.md
+step-by-step.md
+task1.md
+task2.md
+task3.md
+test_quick.py

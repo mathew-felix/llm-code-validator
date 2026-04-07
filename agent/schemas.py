@@ -39,11 +39,11 @@ class ValidationReport(BaseModel):
     issues: List[ValidationIssue]
     corrected_full_code: str        # The entire code with all fixes applied
     libraries_checked: List[str]    # Libraries successfully validated
-    libraries_unknown: List[str]    # Libraries not in our database (honest)
+    libraries_unknown: List[str]    # Libraries outside the local database
     total_issues_found: int
     overall_confidence: float
     filtered_count: int = 0         # How many low-confidence false positives were suppressed
-    summary: str                    # One paragraph plain English summary
+    summary: str                    # Short summary of the findings
 
 
 class AgentState(BaseModel):
