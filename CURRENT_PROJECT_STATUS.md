@@ -133,7 +133,7 @@ The project now has a deterministic fallback when OpenAI times out or returns qu
 
 ## What Happened When Testing On The Thesis Repo
 
-The repo now includes `neural-edge-video-compression`, which was used as the real-world test project.
+The repo now includes `neural-edge-video-compression` as a Git submodule, which was used as the real-world test project.
 
 The thesis-validation harness in `thesis_validation/run_on_thesis.py` currently:
 

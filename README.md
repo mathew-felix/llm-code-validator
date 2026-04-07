@@ -58,6 +58,8 @@ and line-specific fix output that the baseline cannot generate.
 I also ran the validator against the project-owned Python files in
 [`neural-edge-video-compression`](neural-edge-video-compression) using
 [`thesis_validation/run_on_thesis.py`](thesis_validation/run_on_thesis.py).
+The thesis repo is tracked as a Git submodule so the same real-world test corpus
+can be checked out in a fresh clone.
 That scan skips vendored directories, test suites, and files above the current
 10,000-character validator limit so the run matches the product's supported input size.
 
@@ -101,7 +103,7 @@ These are the documented cases where the validator does not work:
 ## Running Locally
 
 ```bash
-git clone https://github.com/mathew-felix/llm-code-validator
+git clone --recurse-submodules https://github.com/mathew-felix/llm-code-validator
 cd llm-code-validator
 python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
@@ -109,6 +111,12 @@ cp .env.example .env
 uvicorn api.main:app --reload
 ```
 Open `frontend/index.html` in your browser.
+
+If you already cloned the repo without submodules, run:
+
+```bash
+git submodule update --init --recursive
+```
 
 To run the thesis scan after the API key is configured:
 

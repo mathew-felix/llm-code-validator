@@ -21,9 +21,11 @@ SKIP_DIRECTORIES = {
 MAX_CODE_CHARS = 10_000
 MAX_VALIDATION_ATTEMPTS = 2
 
-if not os.path.isdir(THESIS_CODE_PATH):
+if not os.path.isdir(THESIS_CODE_PATH) or not os.listdir(THESIS_CODE_PATH):
     raise FileNotFoundError(
-        f"Expected thesis repo at {THESIS_CODE_PATH}, but the directory does not exist."
+        f"Expected thesis repo at {THESIS_CODE_PATH}. "
+        "If you cloned without submodules, run: "
+        "git submodule update --init --recursive"
     )
 
 
