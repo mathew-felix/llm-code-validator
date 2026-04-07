@@ -67,6 +67,24 @@ def extract_imports_node(state: dict) -> dict:
                 )
                 extracted_calls.append(call)
 
+    # --- Pass 1.5: Infer simple object aliases from imported constructors ---
+    # Example: df = pd.DataFrame(...) lets us later attribute df.append() to pandas.
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Assign):
+            continue
+        if len(node.targets) != 1 or not isinstance(node.targets[0], ast.Name):
+            continue
+
+        assigned_name = node.targets[0].id
+        assigned_value = node.value.func if isinstance(node.value, ast.Call) else node.value
+
+        if isinstance(assigned_value, ast.Attribute) and isinstance(assigned_value.value, ast.Name):
+            caller = assigned_value.value.id
+            if caller in alias_map:
+                alias_map[assigned_name] = alias_map[caller]
+        elif isinstance(assigned_value, ast.Name) and assigned_value.id in alias_map:
+            alias_map[assigned_name] = alias_map[assigned_value.id]
+
     # --- Pass 2: Extract method/attribute calls on imported names ---
     # Only extract calls where the caller is a known import (avoids noise)
     for node in ast.walk(tree):
