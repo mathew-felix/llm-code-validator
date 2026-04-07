@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Code Hallucination Validator</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background: #0f0f0f; color: #e0e0e0; }
+        
+        header {
+            padding: 20px 40px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        header h1 { font-size: 20px; font-weight: 600; }
+        .badge {
+            background: #1a1a2e;
+            border: 1px solid #4a4a8a;
+            color: #8888ff;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        
+        .container { display: grid; grid-template-columns: 1fr 1fr; height: calc(100vh - 65px); }
+        
+        .panel { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+        .panel-header { font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        
+        textarea {
+            flex: 1;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            padding: 16px;
+            resize: none;
+            outline: none;
+            line-height: 1.6;
+        }
+        textarea:focus { border-color: #4a4a8a; }
+        
+        button {
+            background: #4a4a8a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover { background: #5a5aaa; }
+        button:disabled { background: #333; cursor: not-allowed; }
+        
+        .right-panel { border-left: 1px solid #333; }
+        .results { flex: 1; overflow-y: auto; }
+        
+        .issue-card {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-left: 3px solid #ff4444;
+        }
+        .issue-card.wrong_import { border-left-color: #ff8c00; }
+        .issue-card.wrong_signature { border-left-color: #ffcc00; }
+        .issue-card.deprecated { border-left-color: #ff4444; }
+        .issue-card.hallucinated { border-left-color: #ff0066; }
+        
+        .issue-type {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #888;
+            margin-bottom: 6px;
+        }
+        .issue-line { font-size: 12px; color: #666; margin-bottom: 8px; }
+        
+        code {
+            background: #252525;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+        
+        .explanation { font-size: 13px; line-height: 1.5; margin: 8px 0; color: #ccc; }
+        
+        .fix-label { font-size: 11px; color: #4caf50; text-transform: uppercase; margin-top: 10px; }
+        .fix-code {
+            background: #0a1a0a;
+            border: 1px solid #1a3a1a;
+            border-radius: 4px;
+            padding: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #4caf50;
+            margin-top: 4px;
+        }
+        
+        .no-issues {
+            text-align: center;
+            padding: 60px 20px;
+            color: #4caf50;
+        }
+        .no-issues .icon { font-size: 48px; margin-bottom: 12px; }
+        
+        .loading { text-align: center; padding: 60px 20px; color: #888; }
+        .spinner {
+            width: 32px; height: 32px;
+            border: 3px solid #333;
+            border-top-color: #4a4a8a;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 12px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .summary {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #aaa;
+            margin-bottom: 12px;
+        }
+        
+        .stats { display: flex; gap: 12px; margin-bottom: 12px; }
+        .stat {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 12px;
+            color: #888;
+        }
+        .stat span { color: #e0e0e0; font-weight: 600; font-size: 16px; display: block; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>AI Code Hallucination Validator</h1>
+    <div class="badge">LangGraph + GPT-4o-mini</div>
+</header>
+
+<div class="container">
+    <div class="panel">
+        <div class="panel-header">Paste AI-Generated Python Code</div>
+        <textarea id="codeInput" placeholder="# Paste AI-generated code here...
+# Example broken code:
+from langchain.agents import initialize_agent
+from langchain.llms import OpenAI
+
+llm = OpenAI(temperature=0)
+agent = initialize_agent(
+    tools=[],
+    llm=llm,
+    agent='zero-shot-react-description'
+)"></textarea>
+        <button id="validateBtn" onclick="validate()">
+            Validate Code →
+        </button>
+    </div>
+    
+    <div class="panel right-panel">
+        <div class="panel-header">Validation Report</div>
+        <div class="results" id="results">
+            <div style="padding: 60px 20px; text-align: center; color: #555;">
+                Paste code and click Validate to see the report
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+async function validate() {
+    const code = document.getElementById('codeInput').value.trim();
+    if (!code) return;
+    
+    const btn = document.getElementById('validateBtn');
+    const results = document.getElementById('results');
+    
+    btn.disabled = true;
+    btn.textContent = 'Validating...';
+    results.innerHTML = `
+        <div class="loading">
+            <div class="spinner"></div>
+            Agent is analyzing your code...
+        </div>
+    `;
+    
+    try {
+        const response = await fetch('http://localhost:8000/validate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code })
+        });
+        
+        if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.detail || 'Validation failed');
+        }
+        
+        const report = await response.json();
+        renderReport(report);
+    } catch (err) {
+        results.innerHTML = `
+            <div style="padding: 20px; color: #ff4444;">
+                Error: ${err.message}
+            </div>
+        `;
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Validate Code →';
+    }
+}
+
+function renderReport(report) {
+    const results = document.getElementById('results');
+    
+    if (report.total_issues_found === 0) {
+        results.innerHTML = `
+            <div class="no-issues">
+                <div class="icon">✅</div>
+                <strong>No issues found</strong>
+                <p style="color: #666; margin-top: 8px;">
+                    Checked ${report.libraries_checked.length} libraries
+                </p>
+            </div>
+        `;
+        return;
+    }
+    
+    const confidence = (report.overall_confidence * 100).toFixed(0);
+    
+    let html = `
+        <div class="stats">
+            <div class="stat"><span>${report.total_issues_found}</span>Issues Found</div>
+            <div class="stat"><span>${confidence}%</span>Confidence</div>
+            <div class="stat"><span>${report.libraries_checked.length}</span>Libs Checked</div>
+        </div>
+        <div class="summary">${report.summary}</div>
+    `;
+    
+    for (const issue of report.issues) {
+        html += `
+            <div class="issue-card ${issue.issue_type}">
+                <div class="issue-type">⚠ ${issue.issue_type.replace('_', ' ')}</div>
+                <div class="issue-line">Line ${issue.line_number}</div>
+                <code>${escapeHtml(issue.original_code)}</code>
+                <div class="explanation">${issue.explanation}</div>
+                <div class="fix-label">✓ Corrected</div>
+                <div class="fix-code">${escapeHtml(issue.corrected_code)}</div>
+            </div>
+        `;
+    }
+    
+    if (report.libraries_unknown.length > 0) {
+        html += `
+            <div class="summary" style="border: 1px solid #333;">
+                ⚠ Libraries not in database (limited validation):
+                ${report.libraries_unknown.join(', ')}
+            </div>
+        `;
+    }
+    
+    results.innerHTML = html;
+}
+
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+{
+  "langchain": {
+    "current_version": "0.3.x",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "initialize_agent": {
+        "exists": false,
+        "removed_in": "0.2.0",
+        "reason": "Replaced by LangGraph agent constructors",
+        "replacement": "langgraph.prebuilt.create_react_agent",
+        "old_import": "from langchain.agents import initialize_agent",
+        "replacement_example": "from langgraph.prebuilt import create_react_agent\nagent = create_react_agent(llm, tools)"
+      },
+      "ConversationBufferMemory": {
+        "exists": true,
+        "module_current": "langchain_community.memory",
+        "module_old": "langchain.memory",
+        "changed_in": "0.2.0",
+        "note": "Moved to langchain_community package — requires pip install langchain-community",
+        "old_import": "from langchain.memory import ConversationBufferMemory",
+        "new_import": "from langchain_community.memory import ConversationBufferMemory"
+      },
+      "LLMChain": {
+        "exists": false,
+        "removed_in": "0.3.0",
+        "reason": "Replaced by LCEL (LangChain Expression Language) pipe syntax",
+        "replacement": "chain = prompt | llm | output_parser",
+        "old_import": "from langchain.chains import LLMChain",
+        "replacement_example": "from langchain_core.prompts import ChatPromptTemplate\nchain = ChatPromptTemplate.from_template('{input}') | llm"
+      },
+      "OpenAI": {
+        "exists": true,
+        "module_current": "langchain_openai",
+        "module_old": "langchain.llms",
+        "changed_in": "0.2.0",
+        "note": "Moved to langchain_openai package",
+        "old_import": "from langchain.llms import OpenAI",
+        "new_import": "from langchain_openai import OpenAI"
+      },
+      "ChatOpenAI": {
+        "exists": true,
+        "module_current": "langchain_openai",
+        "module_old": "langchain.chat_models",
+        "changed_in": "0.2.0",
+        "note": "Moved to langchain_openai package",
+        "old_import": "from langchain.chat_models import ChatOpenAI",
+        "new_import": "from langchain_openai import ChatOpenAI"
+      }
+    }
+  },
+  "openai": {
+    "current_version": "1.x",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "openai.ChatCompletion.create": {
+        "exists": false,
+        "removed_in": "1.0.0",
+        "removed_date": "2023-11-06",
+        "reason": "Complete SDK rewrite — class-based API removed",
+        "old_import": "import openai\nopenai.ChatCompletion.create(...)",
+        "replacement": "from openai import OpenAI\nclient = OpenAI()\nclient.chat.completions.create(...)",
+        "replacement_example": "from openai import OpenAI\nclient = OpenAI(api_key='your-key')\nresponse = client.chat.completions.create(\n    model='gpt-4o-mini',\n    messages=[{'role': 'user', 'content': 'Hello'}]\n)"
+      },
+      "openai.Completion.create": {
+        "exists": false,
+        "removed_in": "1.0.0",
+        "reason": "Completions API replaced by chat completions",
+        "old_import": "import openai\nopenai.Completion.create(...)",
+        "replacement": "client.chat.completions.create(...)"
+      },
+      "openai.api_key": {
+        "exists": false,
+        "removed_in": "1.0.0",
+        "reason": "Global state removed — pass key to client constructor",
+        "old_usage": "openai.api_key = 'sk-...'",
+        "replacement": "client = OpenAI(api_key='sk-...')"
+      }
+    }
+  },
+  "pydantic": {
+    "current_version": "2.x",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "validator": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "reason": "Replaced by field_validator decorator",
+        "old_import": "from pydantic import validator",
+        "replacement": "from pydantic import field_validator",
+        "replacement_example": "@field_validator('field_name')\n@classmethod\ndef validate_field(cls, v):\n    return v"
+      },
+      "BaseModel.__fields__": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "reason": "Replaced by model_fields",
+        "old_usage": "MyModel.__fields__",
+        "replacement": "MyModel.model_fields"
+      },
+      "BaseModel.dict": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "reason": "Replaced by model_dump()",
+        "old_usage": "my_instance.dict()",
+        "replacement": "my_instance.model_dump()"
+      },
+      "BaseModel.json": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "reason": "Replaced by model_dump_json()",
+        "old_usage": "my_instance.json()",
+        "replacement": "my_instance.model_dump_json()"
+      }
+    }
+  },
+  "sklearn": {
+    "current_version": "1.4.x",
+    "methods": {
+      "StandardScaler.fit_transform": {
+        "exists": true,
+        "signature": "fit_transform(X, y=None, **fit_params)",
+        "common_mistake": "Passing y as a positional argument — y is ignored for StandardScaler",
+        "correct_usage": "scaler.fit_transform(X)"
+      }
+    }
+  },
+  "pandas": {
+    "current_version": "2.x",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "append": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "reason": "DataFrame.append was deprecated and then removed in 2.0.0. Use pd.concat instead.",
+        "old_usage": "df1.append(df2)",
+        "replacement": "pd.concat([df1, df2])"
+      },
+      "mad": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "reason": "mad() was removed in 2.0.0.",
+        "old_usage": "df.mad()",
+        "replacement": "(df - df.mean()).abs().mean()"
+      },
+      "Int64Index": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "reason": "NumericIndex types were removed in 2.0.0",
+        "old_usage": "pd.Int64Index([1, 2, 3])",
+        "replacement": "pd.Index([1, 2, 3], dtype='int64')"
+      }
+    }
+  },
+  "torch": {
+    "current_version": "2.x",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "sigmoid": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "reason": "Deprecated from torch.nn.functional in favor of torch.sigmoid",
+        "old_usage": "F.sigmoid(x)",
+        "replacement": "torch.sigmoid(x)"
+      },
+      "cholesky": {
+        "exists": false,
+        "removed_in": "2.0.0",
+        "reason": "torch.cholesky is deprecated. Use torch.linalg.cholesky instead.",
+        "old_usage": "torch.cholesky(A)",
+        "replacement": "torch.linalg.cholesky(A)"
+      }
+    }
+  },
+  "fastapi": {
+    "current_version": "0.100+",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "on_event": {
+        "exists": true,
+        "changed_in": "0.93.0",
+        "note": "on_event('startup') is deprecated, use lifespan context managers instead.",
+        "old_usage": "@app.on_event('startup')",
+        "replacement": "@asynccontextmanager\nasync def lifespan(app: FastAPI):\n    yield\napp = FastAPI(lifespan=lifespan)"
+      }
+    }
+  },
+  "transformers": {
+    "current_version": "4.x",
+    "last_updated": "2026-04-07",
+    "methods": {
+      "per_gpu_train_batch_size": {
+        "exists": false,
+        "removed_in": "4.30.0",
+        "reason": "Deprecated in favor of per_device_train_batch_size",
+        "old_usage": "TrainingArguments(per_gpu_train_batch_size=8)",
+        "replacement": "TrainingArguments(per_device_train_batch_size=8)"
+      }
+    }
+  }
+}

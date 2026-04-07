@@ -1,0 +1,64 @@
+[
+  {
+    "id": "test_001",
+    "description": "LangChain initialize_agent removed in 0.2",
+    "code": "from langchain.agents import initialize_agent\nfrom langchain.llms import OpenAI\nagent = initialize_agent(tools=[], llm=OpenAI())",
+    "known_issues": [
+      {
+        "line": 1,
+        "type": "deprecated",
+        "method": "initialize_agent",
+        "library": "langchain"
+      },
+      {
+        "line": 2,
+        "type": "wrong_import",
+        "method": "OpenAI",
+        "library": "langchain"
+      }
+    ],
+    "source": "Personal experience + r/LocalLLaMA"
+  },
+  {
+    "id": "test_002",
+    "description": "Pandas Int64Index removed in 2.0",
+    "code": "import pandas as pd\nfrom pandas import Int64Index\nidx = Int64Index([1, 2, 3])",
+    "known_issues": [
+      {
+        "line": 2,
+        "type": "deprecated",
+        "method": "Int64Index",
+        "library": "pandas"
+      }
+    ],
+    "source": "Pandas docs"
+  },
+  {
+    "id": "test_003",
+    "description": "PyTorch functional sigmoid deprecated",
+    "code": "import torch\nfrom torch.nn.functional import sigmoid\ny = sigmoid(torch.tensor([1.0]))",
+    "known_issues": [
+      {
+        "line": 2,
+        "type": "deprecated",
+        "method": "sigmoid",
+        "library": "torch"
+      }
+    ],
+    "source": "PyTorch docs"
+  },
+  {
+    "id": "test_004",
+    "description": "OpenAI api key and create deprecation",
+    "code": "import openai\nfrom openai.ChatCompletion import create\nopenai.api_key = 'sk-123'\ncreate()",
+    "known_issues": [
+      {
+        "line": 2,
+        "type": "deprecated",
+        "method": "create",
+        "library": "openai"
+      }
+    ],
+    "source": "OpenAI docs"
+  }
+]

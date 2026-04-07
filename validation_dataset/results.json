@@ -1,0 +1,42 @@
+{
+  "summary": {
+    "total_tests": 5,
+    "precision": 0.2857142857142857,
+    "recall": 0.2857142857142857,
+    "true_positives": 2,
+    "false_positives": 5,
+    "false_negatives": 5
+  },
+  "per_test": [
+    {
+      "id": "test_001",
+      "expected": 2,
+      "found": 2,
+      "true_positives": 2
+    },
+    {
+      "id": "test_002",
+      "expected": 1,
+      "found": 2,
+      "true_positives": 0
+    },
+    {
+      "id": "test_003",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 0
+    },
+    {
+      "id": "test_004",
+      "expected": 1,
+      "found": 1,
+      "true_positives": 0
+    },
+    {
+      "id": "test_005",
+      "expected": 2,
+      "found": 1,
+      "true_positives": 0
+    }
+  ]
+}
