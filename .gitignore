@@ -2,8 +2,19 @@
 *.pyc
 .DS_Store
 .env
+.cursorrules
+.cursor/
+AGENTS.md
+CLAUDE.md
+*.mdc
+.aider*
+__ai_context__/
+_codex_*
 __pycache__/
 venv/
+.venv*/
+build/
+dist/
 .agents/
 ai_hallucination_validator_plan.md
 evaluation_results*.txt
@@ -15,3 +26,4 @@ task1.md
 task2.md
 task3.md
 test_quick.py
+.external_repos/

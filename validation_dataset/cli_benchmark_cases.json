@@ -1,0 +1,48 @@
+[
+  {
+    "id": "openai-chatcompletion",
+    "path": "openai_case.py",
+    "code": "import openai\nopenai.ChatCompletion.create(model='gpt-4o-mini', messages=[])\n",
+    "expected_diagnostics": [
+      {"library": "openai", "symbol": "openai.ChatCompletion.create"}
+    ]
+  },
+  {
+    "id": "pinecone-init",
+    "path": "pinecone_case.py",
+    "code": "import pinecone\npinecone.init(api_key='x', environment='us-east1-gcp')\n",
+    "expected_diagnostics": [
+      {"library": "pinecone", "symbol": "pinecone.init"}
+    ]
+  },
+  {
+    "id": "pandas-append",
+    "path": "pandas_case.py",
+    "code": "import pandas as pd\ndf = pd.DataFrame()\ndf.append({'a': 1})\n",
+    "expected_diagnostics": [
+      {"library": "pandas", "symbol": "DataFrame.append"}
+    ]
+  },
+  {
+    "id": "numpy-bool",
+    "path": "numpy_case.py",
+    "code": "import numpy as np\ndtype = np.bool\n",
+    "expected_diagnostics": [
+      {"library": "numpy", "symbol": "np.bool"}
+    ]
+  },
+  {
+    "id": "langchain-chatopenai",
+    "path": "langchain_case.py",
+    "code": "from langchain.chat_models import ChatOpenAI\nllm = ChatOpenAI()\n",
+    "expected_diagnostics": [
+      {"library": "langchain", "symbol": "ChatOpenAI"}
+    ]
+  },
+  {
+    "id": "clean-python",
+    "path": "clean_case.py",
+    "code": "def add(a, b):\n    return a + b\n",
+    "expected_diagnostics": []
+  }
+]

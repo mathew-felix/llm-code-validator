@@ -1,68 +1,137 @@
 # llm-code-validator
 
-Checks Python code snippets against a curated API breakage database and live PyPI metadata to catch outdated imports, removed methods, and obviously fake packages before runtime.
+Python CLI for checking dependency-heavy Python projects for stale or version-incompatible third-party API usage before commit or CI.
 
-![Demo](assets/demo.gif)
+It parses Python files with `ast`, checks imports and calls against a maintained API-drift rule database, and reports issues before runtime.
 
-## Overview
+Current local validation: 74 tests passing, 68 API-drift rules, and PyPI install verified.
 
-This project was built around a simple failure mode: generated code often uses APIs that have moved or been removed. Examples from the dataset include `pinecone.init()`, `langchain.chat_models.ChatOpenAI`, and `pandas.DataFrame.append()`.
+PyPI: https://pypi.org/project/llm-code-validator/
 
-## Pipeline
+![Terminal demo showing API drift diagnostics and safe fix preview](docs/demo.gif)
 
-![Architecture](assets/architecture.svg)
+## Install
 
-1. Parse the input with `ast`
-2. Extract imports, aliases, and attribute calls
-3. Match calls against the local breakage database
-4. Query PyPI for libraries outside the database
-5. Route through the supervisor and specialist nodes
-6. Merge findings into a typed validation report
+```bash
+pip install llm-code-validator
+```
 
-The graph is implemented with LangGraph so the PyPI fetch and specialist passes can be skipped when they are not needed.
-
-## Results
-
-Latest saved benchmark from [`validation_dataset/results.json`](validation_dataset/results.json):
-
-| Approach | Precision | Recall | Notes |
-|---|---|---|---|
-| Dictionary lookup (`tests/baseline.py`) | 86.7% | 80.2% | Exact string matching |
-| `llm-code-validator` | 76.6% | 72.0% | AST + PyPI fallback + routed diagnosis |
-
-The baseline still wins on raw benchmark score. The full validator adds corrected output, per-line explanations, and PyPI-backed handling for packages outside the local signature set.
-
-## Limitations
-
-- Import-name normalization is a lookup table, so uncommon import/distribution mismatches still need explicit entries.
-- Repo-local import detection is heuristic and can still miss edge cases in larger codebases.
-- Inputs are capped at 10,000 characters.
-- Alias tracking is partial; complex object flows are not type-inferred.
-- Libraries outside the curated set can be existence-checked on PyPI, but method-level validation is limited.
-- When the OpenAI path is unavailable, the validator falls back to deterministic database/PyPI evidence and returns narrower explanations.
-
-## Tech Stack
-
-| Component | Technology |
-|---|---|
-| Agent graph | LangGraph 0.2.x |
-| LLM | GPT-4o-mini |
-| Backend | FastAPI |
-| Validation schema | Pydantic v2 |
-| Static parsing | Python `ast` |
-| Package metadata | PyPI JSON API |
-| Frontend | Vanilla HTML/JS |
-
-## Running Locally
+For local development:
 
 ```bash
 git clone https://github.com/mathew-felix/llm-code-validator
 cd llm-code-validator
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env
-uvicorn api.main:app --reload
+pip install -e ".[dev]"
 ```
 
-Open `frontend/index.html` in a browser to use the demo UI.
+## Quick Use
+
+```bash
+llm-code-validator check file.py
+llm-code-validator check src/
+llm-code-validator check --staged
+llm-code-validator check src/ --format json
+llm-code-validator check src/ --format github
+```
+
+Exit codes:
+
+- `0`: no diagnostics
+- `1`: diagnostics found
+- `2`: tool error
+
+## Example
+
+```python
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+```
+
+```bash
+llm-code-validator check app.py
+```
+
+```text
+app.py:1 LCV001 warning sqlalchemy.declarative_base sqlalchemy.declarative_base is incompatible with sqlalchemy>=2.0.0
+  fix: from sqlalchemy.orm import declarative_base
+```
+
+Preview or apply safe fixes:
+
+```bash
+llm-code-validator fix app.py
+llm-code-validator fix app.py --write
+```
+
+## What It Checks
+
+Current rule database:
+
+- 68 API-drift rules
+- 15 safe fixes
+- Rules for OpenAI, Anthropic, LangChain, LangGraph, LlamaIndex, Pinecone, ChromaDB, FastAPI, Pydantic, pandas, NumPy, SQLAlchemy, Torch, and Transformers
+
+Validate the rule database:
+
+```bash
+llm-code-validator validate-signatures
+```
+
+This checks source-level API migration patterns. It does not replace Ruff for linting, mypy for type checking, pip-audit for vulnerability checks, or Dependabot for dependency updates.
+
+## Limitations
+
+- Detects known API-drift rules only.
+- Does not prove full program correctness.
+- Complex dynamic imports may be missed.
+- Dependency checks depend on available project metadata.
+- Suggested fixes require review before applying.
+- External repository findings are treated as candidates until manually reviewed.
+
+## Integrations
+
+Pre-commit:
+
+```yaml
+repos:
+  - repo: https://github.com/mathew-felix/llm-code-validator
+    rev: v0.1.0
+    hooks:
+      - id: llm-code-validator
+```
+
+GitHub Actions:
+
+```yaml
+- run: pip install llm-code-validator
+- run: llm-code-validator check . --format github
+```
+
+## Development
+
+Run tests:
+
+```bash
+pytest -q
+```
+
+Current local result:
+
+```text
+74 passed
+```
+
+Run benchmarks:
+
+```bash
+python -m llm_code_validator.benchmark --dataset validation_dataset/cli_benchmark_cases.json
+python -m llm_code_validator.benchmark --dataset validation_dataset/ai_stack_benchmark_cases.json
+```
+
+## More Details
+
+- `docs/demo.md`: command walkthrough
+- `docs/accuracy.md`: benchmark and external-review notes
+- `docs/rules.md`: rule database notes
+- `docs/release.md`: release steps

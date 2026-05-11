@@ -1,0 +1,104 @@
+[
+  {
+    "id": "openai-chatcompletion",
+    "path": "ai_openai_case.py",
+    "code": "import openai\nopenai.ChatCompletion.create(model='gpt-4o-mini', messages=[])\n",
+    "expected_diagnostics": [
+      {"library": "openai", "symbol": "openai.ChatCompletion.create"}
+    ]
+  },
+  {
+    "id": "anthropic-completions",
+    "path": "ai_anthropic_case.py",
+    "code": "from anthropic import Anthropic\nclient = Anthropic()\nclient.completions.create(model='claude-2', prompt='Human: hi', max_tokens=64)\n",
+    "expected_diagnostics": [
+      {"library": "anthropic", "symbol": "anthropic.Anthropic.completions.create"}
+    ]
+  },
+  {
+    "id": "langchain-chatopenai",
+    "path": "ai_langchain_case.py",
+    "code": "from langchain.chat_models import ChatOpenAI\nllm = ChatOpenAI()\n",
+    "expected_diagnostics": [
+      {"library": "langchain", "symbol": "ChatOpenAI"}
+    ]
+  },
+  {
+    "id": "langgraph-messagegraph",
+    "path": "ai_langgraph_case.py",
+    "code": "from langgraph.graph import MessageGraph\ngraph = MessageGraph()\n",
+    "expected_diagnostics": [
+      {"library": "langgraph", "symbol": "MessageGraph"}
+    ]
+  },
+  {
+    "id": "llamaindex-gpt-simple-vector-index",
+    "path": "ai_llamaindex_case.py",
+    "code": "from llama_index import GPTSimpleVectorIndex\nindex = GPTSimpleVectorIndex([])\n",
+    "expected_diagnostics": [
+      {"library": "llama_index", "symbol": "GPTSimpleVectorIndex"}
+    ]
+  },
+  {
+    "id": "pinecone-init",
+    "path": "ai_pinecone_case.py",
+    "code": "import pinecone\npinecone.init(api_key='x', environment='us-east1-gcp')\n",
+    "expected_diagnostics": [
+      {"library": "pinecone", "symbol": "pinecone.init"}
+    ]
+  },
+  {
+    "id": "chromadb-client",
+    "path": "ai_chromadb_case.py",
+    "code": "import chromadb\nclient = chromadb.Client()\n",
+    "expected_diagnostics": [
+      {"library": "chromadb", "symbol": "Client"}
+    ]
+  },
+  {
+    "id": "weaviate-client",
+    "path": "ai_weaviate_case.py",
+    "code": "import weaviate\nclient = weaviate.Client('http://localhost:8080')\n",
+    "expected_diagnostics": [
+      {"library": "weaviate", "symbol": "weaviate.Client"}
+    ]
+  },
+  {
+    "id": "fastapi-on-event",
+    "path": "ai_fastapi_case.py",
+    "code": "from fastapi import FastAPI\napp = FastAPI()\n@app.on_event('startup')\nasync def startup():\n    pass\n",
+    "expected_diagnostics": [
+      {"library": "fastapi", "symbol": "on_event"}
+    ]
+  },
+  {
+    "id": "pydantic-validator",
+    "path": "ai_pydantic_case.py",
+    "code": "from pydantic import BaseModel, validator\nclass Request(BaseModel):\n    query: str\n    @validator('query')\n    def non_empty(cls, value):\n        return value\n",
+    "expected_diagnostics": [
+      {"library": "pydantic", "symbol": "validator"}
+    ]
+  },
+  {
+    "id": "pandas-append",
+    "path": "ai_pandas_case.py",
+    "code": "import pandas as pd\ndf = pd.DataFrame()\ndf.append({'text': 'hello'})\n",
+    "expected_diagnostics": [
+      {"library": "pandas", "symbol": "DataFrame.append"}
+    ]
+  },
+  {
+    "id": "numpy-bool",
+    "path": "ai_numpy_case.py",
+    "code": "import numpy as np\ndtype = np.bool\n",
+    "expected_diagnostics": [
+      {"library": "numpy", "symbol": "np.bool"}
+    ]
+  },
+  {
+    "id": "clean-ai-service",
+    "path": "ai_clean_case.py",
+    "code": "from fastapi import FastAPI\nfrom openai import OpenAI\napp = FastAPI()\nclient = OpenAI()\n",
+    "expected_diagnostics": []
+  }
+]

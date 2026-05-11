@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-code-validator"
+version = "0.1.0"
+description = "CLI guardrail for catching stale Python APIs before runtime."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+llm-code-validator = "llm_code_validator.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["llm_code_validator*"]
+
+[tool.setuptools.package-data]
+llm_code_validator = ["library_signatures.json"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]

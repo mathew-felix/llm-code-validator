@@ -1,0 +1,5 @@
+- id: llm-code-validator
+  name: llm-code-validator
+  entry: llm-code-validator check
+  language: system
+  types: [python]

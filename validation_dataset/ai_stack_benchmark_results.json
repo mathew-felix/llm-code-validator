@@ -1,0 +1,23 @@
+{
+  "benchmark_date": "2026-05-12",
+  "cases": 13,
+  "dataset": "validation_dataset\\ai_stack_benchmark_cases.json",
+  "diagnostics": 12,
+  "expected_diagnostics": 12,
+  "false_negative_examples": [],
+  "false_negatives": 0,
+  "false_positive_examples": [],
+  "false_positives": 0,
+  "files": 13,
+  "files_per_second": 1295.9307753466528,
+  "hardware": "AMD64",
+  "os": "Windows-11-10.0.26200-SP0",
+  "p50_ms": 0.44350000098347664,
+  "p95_ms": 4.938999976729974,
+  "peak_ram_mb": 0.23330116271972656,
+  "precision": 1.0,
+  "python_version": "3.12.0",
+  "recall": 1.0,
+  "total_seconds": 0.010031400015577674,
+  "true_positives": 12
+}
