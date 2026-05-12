@@ -11,7 +11,7 @@
         "old_import": "from langchain.agents import initialize_agent",
         "replacement": "langgraph.prebuilt.create_react_agent",
         "replacement_example": "from langgraph.prebuilt import create_react_agent\nagent = create_react_agent(llm, tools)",
-        "source_note": "Curated API-drift signature for langchain 0.3.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://python.langchain.com/docs/versions/v0_2/deprecations/"
       },
       "ConversationBufferMemory": {
         "exists": true,
@@ -90,7 +90,7 @@
         "reason": "Global state removed — pass key to client constructor instead",
         "old_usage": "openai.api_key = 'sk-...'",
         "replacement": "client = OpenAI(api_key='sk-...')",
-        "source_note": "Curated API-drift signature for openai 1.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://github.com/openai/openai-python/discussions/742"
       },
       "openai.Embedding.create": {
         "exists": false,
@@ -137,7 +137,7 @@
         "reason": "Replaced by model_fields — returns FieldInfo objects instead of ModelField",
         "old_usage": "MyModel.__fields__",
         "replacement": "MyModel.model_fields",
-        "source_note": "Curated API-drift signature for pydantic 2.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.pydantic.dev/latest/migration/#changes-to-pydanticbasemodel"
       },
       "BaseModel.dict": {
         "exists": false,
@@ -186,7 +186,7 @@
         "old_import": "from sklearn.externals import joblib",
         "replacement": "import joblib",
         "replacement_example": "import joblib\njoblib.dump(model, 'model.pkl')\nmodel = joblib.load('model.pkl')",
-        "source_note": "Curated API-drift signature for sklearn 1.4.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://scikit-learn.org/stable/whats_new/v0.23.html"
       }
     }
   },
@@ -202,7 +202,7 @@
         "old_usage": "df1.append(df2)",
         "replacement": "pd.concat([df1, df2])",
         "replacement_example": "import pandas as pd\nresult = pd.concat([df1, df2], ignore_index=True)",
-        "source_note": "Curated API-drift signature for pandas 2.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://pandas.pydata.org/docs/whatsnew/v2.0.0.html"
       },
       "mad": {
         "exists": false,
@@ -211,7 +211,7 @@
         "reason": "mad() (mean absolute deviation) was removed in 2.0.0",
         "old_usage": "df.mad()",
         "replacement": "(df - df.mean()).abs().mean()",
-        "source_note": "Curated API-drift signature for pandas 2.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://pandas.pydata.org/docs/whatsnew/v2.0.0.html"
       },
       "Int64Index": {
         "exists": false,
@@ -220,7 +220,7 @@
         "reason": "NumericIndex types (Int64Index, Float64Index, UInt64Index) were removed in 2.0.0",
         "old_usage": "pd.Int64Index([1, 2, 3])",
         "replacement": "pd.Index([1, 2, 3], dtype='int64')",
-        "source_note": "Curated API-drift signature for pandas 2.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://pandas.pydata.org/docs/whatsnew/v2.0.0.html"
       },
       "DataFrame.swaplevel": {
         "exists": true,
@@ -228,7 +228,7 @@
         "note": "i and j parameter defaults changed — must now specify explicitly",
         "old_usage": "df.swaplevel()",
         "replacement": "df.swaplevel(0, 1)",
-        "source_note": "Curated API-drift signature for pandas 2.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://pandas.pydata.org/docs/whatsnew/v2.0.0.html"
       },
       "DataFrame.iteritems": {
         "exists": false,
@@ -248,7 +248,7 @@
         "old_usage": "df.drop(columns=['col'], inplace=True)",
         "replacement": "df = df.drop(columns=['col'])",
         "replacement_example": "# Old pattern (deprecated):\ndf.reset_index(inplace=True)\n# New pattern:\ndf = df.reset_index()",
-        "source_note": "Curated API-drift signature for pandas 2.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://pandas.pydata.org/docs/whatsnew/v2.0.0.html"
       }
     }
   },
@@ -263,7 +263,7 @@
         "old_usage": "F.sigmoid(x)",
         "replacement": "torch.sigmoid(x)",
         "replacement_example": "import torch\noutput = torch.sigmoid(input_tensor)",
-        "source_note": "Curated API-drift signature for torch 2.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://pytorch.org/docs/stable/generated/torch.linalg.cholesky.html"
       },
       "cholesky": {
         "exists": false,
@@ -272,7 +272,7 @@
         "old_usage": "torch.cholesky(A)",
         "replacement": "torch.linalg.cholesky(A)",
         "replacement_example": "import torch\nL = torch.linalg.cholesky(A)",
-        "source_note": "Curated API-drift signature for torch 2.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://pytorch.org/docs/stable/generated/torch.linalg.cholesky.html"
       },
       "torch.cuda.amp.autocast": {
         "exists": true,
@@ -280,7 +280,7 @@
         "note": "torch.cuda.amp.autocast is deprecated — use torch.amp.autocast('cuda') instead",
         "old_usage": "with torch.cuda.amp.autocast():",
         "replacement": "with torch.amp.autocast('cuda'):",
-        "source_note": "Curated API-drift signature for torch 2.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://pytorch.org/docs/stable/amp.html"
       },
       "torch.nn.utils.clip_grad_value_": {
         "exists": true,
@@ -300,7 +300,7 @@
         "old_usage": "@app.on_event('startup')\nasync def startup(): ...",
         "replacement": "@asynccontextmanager\nasync def lifespan(app: FastAPI):\n    # startup\n    yield\n    # shutdown\napp = FastAPI(lifespan=lifespan)",
         "replacement_example": "from contextlib import asynccontextmanager\nfrom fastapi import FastAPI\n\n@asynccontextmanager\nasync def lifespan(app: FastAPI):\n    print('Starting up')\n    yield\n    print('Shutting down')\n\napp = FastAPI(lifespan=lifespan)",
-        "source_note": "Curated API-drift signature for fastapi 0.115.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://fastapi.tiangolo.com/advanced/events/"
       },
       "Depends": {
         "exists": true,
@@ -319,7 +319,7 @@
         "reason": "Deprecated in favor of per_device_train_batch_size — per-GPU sizing replaced by per-device",
         "old_usage": "TrainingArguments(per_gpu_train_batch_size=8)",
         "replacement": "TrainingArguments(per_device_train_batch_size=8)",
-        "source_note": "Curated API-drift signature for transformers 4.40.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://huggingface.co/docs/transformers/main_classes/trainer"
       },
       "AutoModelForCausalLM.from_pretrained": {
         "exists": true,
@@ -328,7 +328,7 @@
         "common_mistake": "Using device_map='auto' without pip install accelerate",
         "old_usage": "model = AutoModelForCausalLM.from_pretrained('model', device_map='auto')",
         "replacement": "pip install accelerate first, then model = AutoModelForCausalLM.from_pretrained('model', device_map='auto')",
-        "source_note": "Curated API-drift signature for transformers 4.40.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://huggingface.co/docs/transformers/main_classes/model#transformers.PreTrainedModel.from_pretrained"
       },
       "pipeline": {
         "exists": true,
@@ -336,7 +336,7 @@
         "note": "pipeline task parameter must match model architecture — LLMs commonly generate wrong task strings",
         "common_mistake": "Using pipeline('text-generation', model='bert-base-uncased') — BERT is not a text generation model",
         "correct_usage": "pipeline('fill-mask', model='bert-base-uncased') or pipeline('text-generation', model='gpt2')",
-        "source_note": "Curated API-drift signature for transformers 4.40.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://huggingface.co/docs/transformers/main_classes/pipelines"
       },
       "AutoTokenizer": {
         "exists": true,
@@ -359,7 +359,7 @@
         "old_import": "from llama_index import GPTSimpleVectorIndex",
         "replacement": "from llama_index.core import VectorStoreIndex",
         "replacement_example": "from llama_index.core import VectorStoreIndex, SimpleDirectoryReader\ndocs = SimpleDirectoryReader('data').load_data()\nindex = VectorStoreIndex.from_documents(docs)",
-        "source_note": "Curated API-drift signature for llama_index 0.10.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.llamaindex.ai/en/stable/getting_started/v0_10_0_migration/"
       },
       "ServiceContext": {
         "exists": false,
@@ -369,7 +369,7 @@
         "old_import": "from llama_index import ServiceContext",
         "replacement": "from llama_index.core import Settings",
         "replacement_example": "from llama_index.core import Settings\nfrom llama_index.llms.openai import OpenAI\nSettings.llm = OpenAI(model='gpt-4o-mini')",
-        "source_note": "Curated API-drift signature for llama_index 0.10.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.llamaindex.ai/en/stable/getting_started/v0_10_0_migration/"
       },
       "LLMPredictor": {
         "exists": false,
@@ -378,7 +378,7 @@
         "reason": "Removed entirely — use Settings.llm directly",
         "old_import": "from llama_index import LLMPredictor",
         "replacement": "from llama_index.core import Settings",
-        "source_note": "Curated API-drift signature for llama_index 0.10.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.llamaindex.ai/en/stable/getting_started/v0_10_0_migration/"
       },
       "SimpleDirectoryReader": {
         "exists": true,
@@ -387,7 +387,7 @@
         "changed_in": "0.10.0",
         "old_import": "from llama_index import SimpleDirectoryReader",
         "new_import": "from llama_index.core import SimpleDirectoryReader",
-        "source_note": "Curated API-drift signature for llama_index 0.10.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.llamaindex.ai/en/stable/module_guides/loading/simpledirectoryreader/"
       }
     }
   },
@@ -402,7 +402,7 @@
         "old_usage": "task.output",
         "replacement": "Access via crew.kickoff().raw or crew.kickoff().pydantic",
         "replacement_example": "result = crew.kickoff()\nprint(result.raw)",
-        "source_note": "Curated API-drift signature for crewai 0.80.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.crewai.com/concepts/tasks"
       },
       "Process.sequential": {
         "exists": true,
@@ -418,7 +418,7 @@
         "common_mistake": "Old code assumes agents can delegate by default — must now pass allow_delegation=True explicitly",
         "old_behavior": "Agent(role='...', goal='...', backstory='...')  # delegation was True",
         "new_behavior": "Agent(role='...', goal='...', backstory='...', allow_delegation=True)",
-        "source_note": "Curated API-drift signature for crewai 0.80.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.crewai.com/concepts/agents"
       }
     }
   },
@@ -510,7 +510,7 @@
         "old_usage": "session.execute(MyModel.__table__.select())",
         "new_usage": "session.execute(select(MyModel))",
         "replacement_example": "from sqlalchemy import select\nresult = session.execute(select(MyModel).where(MyModel.id == 1))",
-        "source_note": "Curated API-drift signature for sqlalchemy 2.0.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.sqlalchemy.org/en/20/changelog/migration_20.html"
       },
       "Query": {
         "exists": false,
@@ -520,7 +520,7 @@
         "old_usage": "session.query(MyModel).filter(MyModel.id == 1).first()",
         "replacement": "session.execute(select(MyModel).where(MyModel.id == 1)).scalar_one_or_none()",
         "replacement_example": "from sqlalchemy import select\nstmt = select(MyModel).where(MyModel.id == 1)\nresult = session.execute(stmt).scalar_one_or_none()",
-        "source_note": "Curated API-drift signature for sqlalchemy 2.0.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.sqlalchemy.org/en/20/changelog/migration_20.html"
       },
       "Engine.execute": {
         "exists": false,
@@ -530,7 +530,7 @@
         "old_usage": "engine.execute('SELECT * FROM table')",
         "replacement": "with engine.connect() as conn:\n    result = conn.execute(text('SELECT * FROM table'))",
         "replacement_example": "from sqlalchemy import text\nwith engine.connect() as conn:\n    result = conn.execute(text('SELECT * FROM users'))\n    rows = result.fetchall()",
-        "source_note": "Curated API-drift signature for sqlalchemy 2.0.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.sqlalchemy.org/en/20/changelog/migration_20.html"
       },
       "declarative_base": {
         "exists": true,
@@ -541,7 +541,7 @@
         "replacement": "from sqlalchemy.orm import declarative_base",
         "fix_safety": "safe_fix",
         "match_exact_only": true,
-        "source_note": "Curated API-drift signature for sqlalchemy 2.0.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.sqlalchemy.org/en/20/changelog/migration_20.html"
       }
     }
   },
@@ -556,9 +556,11 @@
         "old_usage": "client.completions.create(model='claude-2', prompt=prompt, max_tokens=1000)",
         "replacement": "client.messages.create(model='claude-3-5-sonnet-20241022', max_tokens=1000, messages=[{'role': 'user', 'content': prompt}])",
         "replacement_example": "from anthropic import Anthropic\nclient = Anthropic()\nmessage = client.messages.create(\n    model='claude-3-5-sonnet-20241022',\n    max_tokens=1024,\n    messages=[{'role': 'user', 'content': 'Hello'}]\n)",
-        "match_names": ["anthropic.completions.create"],
+        "match_names": [
+          "anthropic.completions.create"
+        ],
         "match_exact_only": true,
-        "source_note": "Curated API-drift signature for anthropic 0.40.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.anthropic.com/en/api/messages"
       },
       "HUMAN_PROMPT": {
         "exists": false,
@@ -566,7 +568,7 @@
         "reason": "Special prompt tokens (HUMAN_PROMPT, AI_PROMPT) removed with completions API — messages format handles role separation",
         "old_usage": "f'{HUMAN_PROMPT} Hello {AI_PROMPT}'",
         "replacement": "Use messages list format: [{'role': 'user', 'content': 'Hello'}]",
-        "source_note": "Curated API-drift signature for anthropic 0.40.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.anthropic.com/en/api/messages"
       },
       "anthropic.Client": {
         "exists": false,
@@ -575,7 +577,7 @@
         "old_import": "from anthropic import Client",
         "replacement": "from anthropic import Anthropic",
         "replacement_example": "from anthropic import Anthropic\nclient = Anthropic(api_key='...')",
-        "source_note": "Curated API-drift signature for anthropic 0.40.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.anthropic.com/en/api/messages"
       }
     }
   },
@@ -590,7 +592,7 @@
         "old_import": "from langgraph.graph import MessageGraph",
         "replacement": "from langgraph.graph import StateGraph\nfrom langgraph.graph.message import MessagesState",
         "replacement_example": "from langgraph.graph import StateGraph\nfrom langgraph.graph.message import MessagesState\ngraph = StateGraph(MessagesState)",
-        "source_note": "Curated API-drift signature for langgraph 0.2.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://langchain-ai.github.io/langgraph/concepts/low_level/"
       },
       "langgraph.checkpoint.MemorySaver": {
         "exists": true,
@@ -656,7 +658,7 @@
         "old_import": "import chromadb\nclient = chromadb.Client()",
         "replacement": "import chromadb\nclient = chromadb.PersistentClient(path='./chroma_db')",
         "replacement_example": "import chromadb\n# For persistent storage:\nclient = chromadb.PersistentClient(path='./chroma_db')\n# For in-memory testing:\nclient = chromadb.EphemeralClient()\n# For remote server:\nclient = chromadb.HttpClient(host='localhost', port=8000)",
-        "source_note": "Curated API-drift signature for chromadb 0.4.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.trychroma.com/updates/migration"
       },
       "Settings": {
         "exists": true,
@@ -664,15 +666,17 @@
         "note": "Settings class restructured — chroma_db_impl was removed from common persistent-client setup",
         "old_usage": "chromadb.Client(Settings(chroma_db_impl='duckdb+parquet', persist_directory='./db'))",
         "replacement": "chromadb.PersistentClient(path='./db')",
-        "required_keywords": ["chroma_db_impl"],
-        "source_note": "Curated API-drift signature for chromadb 0.4.x; verify against official migration docs before marking safe_fix."
+        "required_keywords": [
+          "chroma_db_impl"
+        ],
+        "source_url": "https://docs.trychroma.com/updates/migration"
       },
       "Collection.add": {
         "exists": true,
         "changed_in": "0.4.0",
         "note": "embeddings parameter renamed in some contexts — ensure using current parameter names",
         "common_mistake": "Passing positional arguments instead of keyword arguments",
-        "source_note": "Curated API-drift signature for chromadb 0.4.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.trychroma.com/docs/collections/add-data"
       }
     }
   },
@@ -688,7 +692,7 @@
         "old_import": "from tensorflow.keras.models import Sequential",
         "replacement": "from keras.models import Sequential",
         "replacement_example": "import keras\nfrom keras import layers\nmodel = keras.Sequential([\n    layers.Dense(64, activation='relu'),\n    layers.Dense(10, activation='softmax')\n])",
-        "source_note": "Curated API-drift signature for keras 3.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://keras.io/guides/migrating_to_keras_3/"
       },
       "keras.optimizers.Adam": {
         "exists": true,
@@ -696,7 +700,7 @@
         "note": "Optimizer import path simplified — use keras.optimizers directly",
         "old_import": "from tensorflow.keras.optimizers import Adam",
         "new_import": "from keras.optimizers import Adam",
-        "source_note": "Curated API-drift signature for keras 3.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://keras.io/api/optimizers/adam/"
       },
       "model.fit_generator": {
         "exists": false,
@@ -704,7 +708,7 @@
         "reason": "fit_generator removed — use model.fit which now accepts generators natively",
         "old_usage": "model.fit_generator(generator, steps_per_epoch=100)",
         "replacement": "model.fit(generator, steps_per_epoch=100)",
-        "source_note": "Curated API-drift signature for keras 3.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://keras.io/guides/migrating_to_keras_3/"
       }
     }
   },
@@ -751,7 +755,7 @@
         "reason": "TF2 uses eager execution by default — Sessions are no longer needed",
         "old_usage": "sess = tf.Session()\nsess.run(result)",
         "replacement": "# Just call the operation directly — eager execution\nresult = my_operation(inputs)",
-        "source_note": "Curated API-drift signature for tensorflow 2.16.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://www.tensorflow.org/guide/migrate"
       },
       "tf.placeholder": {
         "exists": false,
@@ -760,7 +764,7 @@
         "reason": "Placeholders removed — use tf.function with input signatures or Keras Input layers",
         "old_usage": "x = tf.placeholder(tf.float32, shape=[None, 784])",
         "replacement": "Use keras.Input(shape=(784,)) or tf.function arguments",
-        "source_note": "Curated API-drift signature for tensorflow 2.16.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://www.tensorflow.org/guide/migrate"
       },
       "tf.contrib": {
         "exists": false,
@@ -769,7 +773,7 @@
         "reason": "Entire tf.contrib namespace removed — functions moved to core TF, TF Addons, or removed entirely",
         "old_import": "from tensorflow.contrib import layers",
         "replacement": "from tensorflow.keras import layers",
-        "source_note": "Curated API-drift signature for tensorflow 2.16.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://www.tensorflow.org/guide/migrate"
       },
       "tf.compat.v1": {
         "exists": true,
@@ -790,7 +794,7 @@
         "old_import": "from scipy.misc import imread",
         "replacement": "from imageio import imread",
         "replacement_example": "import imageio.v3 as iio\nimage = iio.imread('image.png')",
-        "source_note": "Curated API-drift signature for scipy 1.14.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.scipy.org/doc/scipy/release/1.3.0-notes.html"
       },
       "scipy.misc.imsave": {
         "exists": false,
@@ -798,7 +802,7 @@
         "reason": "Image IO functions removed — use imageio or PIL",
         "old_import": "from scipy.misc import imsave",
         "replacement": "from imageio import imwrite",
-        "source_note": "Curated API-drift signature for scipy 1.14.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.scipy.org/doc/scipy/release/1.3.0-notes.html"
       },
       "scipy.misc.imresize": {
         "exists": false,
@@ -806,7 +810,7 @@
         "reason": "Image resize removed — use PIL or skimage",
         "old_import": "from scipy.misc import imresize",
         "replacement": "from PIL import Image; img.resize((w, h))",
-        "source_note": "Curated API-drift signature for scipy 1.14.x; verify against official migration docs before marking safe_fix."
+        "source_url": "https://docs.scipy.org/doc/scipy/release/1.3.0-notes.html"
       }
     }
   },

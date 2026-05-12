@@ -10,8 +10,10 @@ def test_github_action_uses_checkout_setup_python_install_and_github_format():
 
     assert "actions/checkout@v4" in serialized
     assert "actions/setup-python@v5" in serialized
-    assert "pip install -e ." in serialized
+    assert 'pip install -e ".[dev]"' in serialized
     assert "llm-code-validator check . --format github" in serialized
+    assert "llm-code-validator validate-signatures" in serialized
+    assert "pytest -q" in serialized
 
 
 def test_pre_commit_hook_points_to_cli_check_command():

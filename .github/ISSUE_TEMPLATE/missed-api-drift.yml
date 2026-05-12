@@ -1,0 +1,54 @@
+name: Missed API drift
+description: Report stale or incompatible API usage that llm-code-validator did not detect.
+title: "Missed API drift: "
+labels: ["rule-candidate"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a missed rule. Please include official evidence so the rule can be reviewed safely.
+  - type: input
+    id: library
+    attributes:
+      label: Library
+      description: Package or library name.
+      placeholder: openai
+    validations:
+      required: true
+  - type: input
+    id: installed-version
+    attributes:
+      label: Installed version
+      description: Version where the API is stale or incompatible.
+      placeholder: "1.0.0"
+    validations:
+      required: true
+  - type: textarea
+    id: code
+    attributes:
+      label: Code sample
+      description: Minimal code that should have been flagged.
+      render: python
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: Observed error or failure
+      description: Runtime error, deprecation warning, or behavior showing the API is stale.
+    validations:
+      required: true
+  - type: input
+    id: evidence
+    attributes:
+      label: Official evidence link
+      description: Official docs, migration guide, release note, or maintainer discussion.
+      placeholder: "https://..."
+    validations:
+      required: true
+  - type: textarea
+    id: replacement
+    attributes:
+      label: Suggested replacement
+      description: If known, provide the current supported API.
+      render: python

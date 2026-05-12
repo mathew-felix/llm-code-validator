@@ -4,11 +4,31 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "llm-code-validator"
-version = "0.1.0"
+version = "0.1.1"
 description = "CLI guardrail for catching stale Python APIs before runtime."
 readme = "README.md"
 requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "Felix Mathew" }]
 dependencies = []
+keywords = ["api-drift", "static-analysis", "llm", "python", "ci"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Software Development :: Testing",
+]
+
+[project.urls]
+Homepage = "https://github.com/mathew-felix/llm-code-validator"
+Repository = "https://github.com/mathew-felix/llm-code-validator"
+Issues = "https://github.com/mathew-felix/llm-code-validator/issues"
+PyPI = "https://pypi.org/project/llm-code-validator/"
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]

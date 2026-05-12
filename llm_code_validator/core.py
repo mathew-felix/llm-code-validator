@@ -211,6 +211,7 @@ def check_source(
     path: str | None = None,
     version_context: VersionContext | None = None,
     show_low_confidence: bool = False,
+    signatures_path: str | None = None,
 ) -> CheckResult:
     display_path = path or STDIN_PATH
     version_context = version_context or VersionContext(None, {}, used_defaults=True)
@@ -232,7 +233,7 @@ def check_source(
 
     extractor = _CallExtractor()
     extractor.visit(tree)
-    signatures = load_signatures()
+    signatures = load_signatures(signatures_path)
     diagnostics: list[Diagnostic] = []
     seen: set[tuple[str, int, str]] = set()
 
@@ -277,6 +278,7 @@ def check_file(
     path: str | Path,
     version_context: VersionContext | None = None,
     show_low_confidence: bool = False,
+    signatures_path: str | None = None,
 ) -> CheckResult:
     file_path = Path(path)
     try:
@@ -296,7 +298,7 @@ def check_file(
             confidence=1.0,
         )
         return CheckResult(checked_files=0, diagnostics=[diagnostic])
-    return check_source(source, str(file_path), version_context, show_low_confidence)
+    return check_source(source, str(file_path), version_context, show_low_confidence, signatures_path)
 
 
 def iter_python_files(paths: list[str]) -> list[Path]:
@@ -330,12 +332,13 @@ def check_paths(
     requirements: str | None = None,
     python_version: str | None = None,
     show_low_confidence: bool = False,
+    signatures_path: str | None = None,
 ) -> CheckResult:
     files = iter_python_files(paths)
     if not files:
         return CheckResult(checked_files=0, warnings=["No Python files were found."])
     version_context = build_version_context(paths, requirements, python_version)
-    return merge_results([check_file(path, version_context, show_low_confidence) for path in files])
+    return merge_results([check_file(path, version_context, show_low_confidence, signatures_path) for path in files])
 
 
 def staged_python_files() -> list[str]:
@@ -354,6 +357,7 @@ def check_stdin(
     requirements: str | None = None,
     python_version: str | None = None,
     show_low_confidence: bool = False,
+    signatures_path: str | None = None,
 ) -> CheckResult:
     version_context = build_version_context(None, requirements, python_version)
-    return check_source(sys.stdin.read(), STDIN_PATH, version_context, show_low_confidence)
+    return check_source(sys.stdin.read(), STDIN_PATH, version_context, show_low_confidence, signatures_path)

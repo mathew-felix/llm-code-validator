@@ -159,3 +159,129 @@ def test_cli_show_low_confidence_option(tmp_path, capsys):
 
     assert exit_code == 1
     assert "DataFrame.append" in output
+
+
+def test_cli_ai_review_payload_is_redacted(tmp_path, capsys):
+    path = tmp_path / "sample.py"
+    path.write_text(
+        "import openai\nOPENAI_API_KEY = 'sk-secret123456789'\nopenai.ChatCompletion.create()\n",
+        encoding="utf-8",
+    )
+
+    exit_code = main(["check", "--ai-review", "--show-ai-payload", str(path)])
+    output = capsys.readouterr().out
+
+    assert exit_code == 1
+    assert "advisory API-drift review" in output
+    assert "sk-secret" not in output
+    assert "[REDACTED]" in output
+
+
+def test_cli_ai_review_requires_provider_configuration(tmp_path, capsys, monkeypatch):
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    path = tmp_path / "clean.py"
+    path.write_text("print('ok')\n", encoding="utf-8")
+
+    exit_code = main(["check", "--ai-review", str(path)])
+    captured = capsys.readouterr()
+
+    assert exit_code == 2
+    assert "OPENAI_API_KEY" in captured.err
+
+
+def test_cli_no_network_blocks_ai_provider_calls(tmp_path, capsys, monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-test123456789")
+    path = tmp_path / "clean.py"
+    path.write_text("print('ok')\n", encoding="utf-8")
+
+    exit_code = main(["check", "--ai-review", "--no-network", str(path)])
+    captured = capsys.readouterr()
+
+    assert exit_code == 2
+    assert "--no-network" in captured.err
+
+
+def test_cli_suggest_rule_outputs_candidate_json(capsys):
+    exit_code = main(
+        [
+            "suggest-rule",
+            "--library",
+            "demo",
+            "--symbol",
+            "old_api",
+            "--removed-in",
+            "2.0.0",
+            "--reason",
+            "Removed in v2.",
+            "--replacement",
+            "new_api",
+            "--evidence",
+            "https://example.com/migration",
+        ]
+    )
+    payload = json.loads(capsys.readouterr().out)
+
+    assert exit_code == 0
+    assert payload["demo"]["methods"]["old_api"]["fix_safety"] == "suggested_fix"
+    assert payload["demo"]["methods"]["old_api"]["source_url"] == "https://example.com/migration"
+
+
+def test_cli_uses_private_signature_database(tmp_path, capsys):
+    signatures = tmp_path / "library_signatures.json"
+    signatures.write_text(
+        json.dumps(
+            {
+                "demo": {
+                    "current_version": "2.x",
+                    "methods": {
+                        "old_api": {
+                            "exists": False,
+                            "removed_in": "2.0.0",
+                            "reason": "removed",
+                            "old_usage": "demo.old_api()",
+                            "source_url": "https://example.com/migration",
+                        }
+                    },
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    source = tmp_path / "sample.py"
+    source.write_text("import demo\ndemo.old_api()\n", encoding="utf-8")
+
+    exit_code = main(["check", "--signatures-path", str(signatures), str(source)])
+    output = capsys.readouterr().out
+
+    assert exit_code == 1
+    assert "demo.old_api" in output
+
+
+def test_cli_policy_can_disable_external_ai(tmp_path, capsys):
+    config = tmp_path / "llm-code-validator.json"
+    config.write_text(
+        json.dumps({"policy": {"allow_external_ai": False, "allowed_ai_providers": ["local"]}}),
+        encoding="utf-8",
+    )
+    source = tmp_path / "clean.py"
+    source.write_text("print('ok')\n", encoding="utf-8")
+
+    exit_code = main(["check", "--ai-review", "--show-ai-payload", "--config", str(config), str(source)])
+    captured = capsys.readouterr()
+
+    assert exit_code == 2
+    assert "not allowed by policy" in captured.err
+
+
+def test_cli_ai_review_writes_audit_log_without_snippets(tmp_path, capsys):
+    source = tmp_path / "clean.py"
+    source.write_text("print('ok')\n", encoding="utf-8")
+    audit = tmp_path / "audit.jsonl"
+
+    exit_code = main(["check", "--ai-review", "--show-ai-payload", "--ai-audit-log", str(audit), str(source)])
+    capsys.readouterr()
+    record = json.loads(audit.read_text(encoding="utf-8").splitlines()[0])
+
+    assert exit_code == 0
+    assert record["provider"] == "openai"
+    assert record["contains_source_snippets"] is False
